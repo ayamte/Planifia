@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:id="@+id/scrollViewSearchTasks"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textViewTaskTitle_SEARCH"
+                        android:layout_width="300dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="-6dp"
+                        android:background="@drawable/rounded_brown_square"
+                        android:padding="8dp"
+                        android:text="TextView"
+                        android:textColor="#FFFDD0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+                    <TextView
+                        android:id="@+id/textView13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="8dp"
+                        android:background="#663300"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:text="Title"
+                        android:textColor="#E8F5E9"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textViewTaskDescription_SEARCH"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="-6dp"
+                        android:background="@drawable/rounded_brown_square"
+                        android:minHeight="48dp"
+                        android:padding="8dp"
+                        android:text="TextView"
+                        android:textColor="#FFFDD0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+                    <TextView
+                        android:id="@+id/textView15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="4dp"
+                        android:background="#663300"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:text="Description"
+                        android:textColor="#E8F5E9"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewTaskTitle_SEARCH" />
+
+                    <TextView
+                        android:id="@+id/textViewTaskDueDate_SEARCH"
+                        android:layout_width="300dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="-6dp"
+                        android:background="@drawable/rounded_brown_square"
+                        android:padding="8dp"
+                        android:text="TextView"
+                        android:textColor="#FFFDD0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView22" />
+
+                    <TextView
+                        android:id="@+id/textView22"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="4dp"
+                        android:background="#663300"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:text="Task Date"
+                        android:textColor="#E8F5E9"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewTaskDescription_SEARCH" />
+
+                    <TextView
+                        android:id="@+id/textViewTaskStartTime_SEARCH"
+                        android:layout_width="300dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="-6dp"
+                        android:background="@drawable/rounded_brown_square"
+                        android:padding="8dp"
+                        android:text="TextView"
+                        android:textColor="#FFFDD0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView24" />
+
+                    <TextView
+                        android:id="@+id/textView24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="4dp"
+                        android:background="#663300"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:text="Start Time"
+                        android:textColor="#E8F5E9"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewTaskDueDate_SEARCH" />
+
+                    <TextView
+                        android:id="@+id/textViewTaskCategory_SEARCH"
+                        android:layout_width="300dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="-6dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/rounded_brown_square"
+                        android:padding="8dp"
+                        android:text="TextView"
+                        android:textColor="#FFFDD0"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView28" />
+
+                    <TextView
+                        android:id="@+id/textView28"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="4dp"
+                        android:background="#663300"
+                        android:paddingStart="5dp"
+                        android:paddingEnd="5dp"
+                        android:text="Category"
+                        android:textColor="#E8F5E9"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewTaskEndTime_SEARCH" />
+
+                    <TextView
+                        android:id="@+id/textViewTaskEndTime_SEARCH"
+                        android:layout_width="300dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="-6dp"
+                        android:background="@drawable/rounded_brown_square"
+                        android:padding="8dp"
+                        android:text="TextView"
+                        android:textColor="#FFFDD0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView23" />
+
+                    <TextView
+                        android:id="@+id/textView23"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="4dp"
+                        android:background="#663300"
+                        android:paddingLeft="5dp"
+                        android:paddingEnd="5dp"
+                        android:text="End Time"
+                        android:textColor="#E8F5E9"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewTaskStartTime_SEARCH" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
