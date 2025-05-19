@@ -41,7 +41,7 @@ public class Home_Page extends AppCompatActivity {
     private static final int REQUEST_GOOGLE_CALENDAR = 1;
 
     TextView textViewUserWelcomeText;
-    Button buttonLogout;
+    ImageView buttonLogout;
 
     private static final String TAG = "Home_Page"; // Tag pour les logs
 

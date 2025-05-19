@@ -8,16 +8,19 @@
     tools:context=".Home_Page">
 
     <!-- Section supérieure avec le fond -->
+
+    <!-- Profil utilisateur (cercle marron) -->
+
     <View
         android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@drawable/gradient_brown_square"
+        android:layout_width="802dp"
+        android:layout_height="328dp"
+        android:background="@drawable/header"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.45"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Profil utilisateur (cercle marron) -->
     <View
         android:id="@+id/viewHomeUserProfile"
         android:layout_width="80dp"
@@ -43,16 +46,20 @@
         app:layout_constraintTop_toTopOf="@+id/viewHomeUserProfile" />
 
     <!-- Bouton de déconnexion -->
-    <Button
+    <ImageView
         android:id="@+id/buttonLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Déconnexion"
-        android:background="@drawable/button_background"
-        android:textColor="#FFFDD0"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/logout"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:elevation="5dp"
+        android:padding="4dp"
+        android:contentDescription="Déconnexion"
+        app:tint="#FFFFFF"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -70,13 +77,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewHomeUserProfile" />
 
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="The secret of getting ahead is getting started."
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUserWelcomeText" />
+
+
     <!-- Première rangée de carreaux -->
+
     <View
         android:id="@+id/viewMyEvents"
         android:layout_width="0dp"
         android:layout_height="150dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="172dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/blurred_background"
         android:elevation="5dp"
@@ -89,7 +111,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="My Events"
-        android:textColor="#FFFFFF"
+        android:textColor="#05316a"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/viewMyEvents"
@@ -102,7 +124,7 @@
         android:layout_width="0dp"
         android:layout_height="150dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="172dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/blurred_background"
         android:elevation="5dp"
@@ -115,7 +137,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="My Tasks"
-        android:textColor="#FFFFFF"
+        android:textColor="#05316a"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/viewMyTasks"
@@ -124,12 +146,13 @@
         app:layout_constraintTop_toTopOf="@+id/viewMyTasks" />
 
     <!-- Deuxième rangée de carreaux -->
+
     <View
         android:id="@+id/viewMyTrack"
         android:layout_width="0dp"
         android:layout_height="150dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/blurred_background"
         android:elevation="5dp"
@@ -142,7 +165,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="My Track"
-        android:textColor="#FFFFFF"
+        android:textColor="#05316a"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/viewMyTrack"
@@ -155,7 +178,7 @@
         android:layout_width="0dp"
         android:layout_height="150dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/blurred_background"
         android:elevation="5dp"
@@ -168,7 +191,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="AI Priorities"
-        android:textColor="#FFFFFF"
+        android:textColor="#05316a"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/viewAIPriorities"
@@ -188,6 +211,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <!-- Bouton Home -->
+
         <ImageView
             android:id="@+id/buttonHome"
             android:layout_width="24dp"
@@ -195,9 +219,10 @@
             android:src="@drawable/ic_home"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/buttonAddTask"
-            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintHorizontal_bias="0.544"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.444" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -227,10 +252,12 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_add" />
+                android:src="@drawable/ic_add"
+                app:tint="#FFFFFF" />
         </FrameLayout>
 
         <!-- Bouton Search Task -->
+
         <ImageView
             android:id="@+id/buttonSearchTask"
             android:layout_width="24dp"
@@ -238,9 +265,10 @@
             android:src="@drawable/ic_search"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.8"
+            app:layout_constraintHorizontal_bias="0.464"
             app:layout_constraintStart_toEndOf="@+id/buttonAddTask"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.444" />
 
         <TextView
             android:layout_width="wrap_content"

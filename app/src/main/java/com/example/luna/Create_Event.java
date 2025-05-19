@@ -16,6 +16,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -40,7 +42,6 @@ import android.os.Build;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
@@ -52,13 +53,17 @@ public class Create_Event extends AppCompatActivity implements OnMapReadyCallbac
     private MapView mapView;
     private Button showMapButton;
     private Dialog mapDialog;
-    String eventLocationName ="";
+    String eventLocationName = "";
 
     com.google.api.services.calendar.Calendar mService;
     EditText editTextTaskTitle, editTextTaskDescription;
     Spinner spinnerTaskCategory;
     TextView textViewDate, textViewStartTime, textViewEndTime, textViewLocation;
     Button buttonSaveTask;
+    // Footer elements
+    ImageView buttonHome, buttonSearchTask;
+    FrameLayout buttonAddTask;
+
     FirebaseAuth userAuth;
     String userId;
     DatabaseReference eventReference;
@@ -69,7 +74,6 @@ public class Create_Event extends AppCompatActivity implements OnMapReadyCallbac
             "School",
             "Finance",
             "Personal",
-
     };
 
     ProgressBar progressBar;
@@ -90,11 +94,7 @@ public class Create_Event extends AppCompatActivity implements OnMapReadyCallbac
         mapDialog = new Dialog(this);
         mapDialog.setContentView(R.layout.map_view_layout);
 
-
-
-
-
-
+        // Initialize location view
         textViewLocation = (TextView) this.findViewById(R.id.textViewEventLocation);
         textViewLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,22 +108,24 @@ public class Create_Event extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
+        // Initialize form elements
         editTextTaskTitle = (EditText) this.findViewById(R.id.editTextCreateEventTitle);
         editTextTaskDescription = (EditText) this.findViewById(R.id.editTextCreateEventDescription);
-
         progressBar = (ProgressBar) this.findViewById(R.id.progressBarSaveTask);
 
+        // Initialize Firebase
         userAuth = FirebaseAuth.getInstance();
         FirebaseUser user = userAuth.getCurrentUser();
         assert user != null;
         userId = user.getUid();
-
         eventReference = FirebaseDatabase.getInstance().getReference("Events");
 
+        // Initialize date and time views
         textViewDate = (TextView) this.findViewById(R.id.textViewCreateTaskDate);
         textViewStartTime = (TextView) this.findViewById(R.id.textViewCreateTaskStartTime);
         textViewEndTime = (TextView) this.findViewById(R.id.textViewCreateEventEndTime);
 
+        // Initialize save button
         buttonSaveTask = (Button) this.findViewById(R.id.buttonCreateEventSave);
         buttonSaveTask.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,22 +135,16 @@ public class Create_Event extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
+        // Initialize category spinner
         spinnerTaskCategory = (Spinner) this.findViewById(R.id.spinnerCreateEventCategory);
-
-        // Assuming you have already initialized your Spinner and categoryArray
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categoryArray);
-
-// Set the layout to use when the list of choices appears
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-  // Set the adapter to the Spinner
         spinnerTaskCategory.setAdapter(arrayAdapter);
-
         spinnerTaskCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String myText = spinnerTaskCategory.getSelectedItem().toString().trim();
-                if (myText == "Select Category".trim()) {
+                if (myText.equals("Select Category".trim())) {
                     //Nothing
                 } else {
                     Toast.makeText(Create_Event.this, "You have Selected " + myText, Toast.LENGTH_SHORT).show();
@@ -158,11 +154,11 @@ public class Create_Event extends AppCompatActivity implements OnMapReadyCallbac
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
+                // Do nothing
             }
         });
 
-        //setting date
+        // Setting date picker
         textViewDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -175,37 +171,29 @@ public class Create_Event extends AppCompatActivity implements OnMapReadyCallbac
                 datePickerDialog = new DatePickerDialog(Create_Event.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
-
                         String myMonth;
-                        if(month<10)
-                        {
-                            myMonth="0"+Integer.toString(month + 1);
-                        }
-                        else {
-                            myMonth=Integer.toString(month + 1);
+                        if (month < 9) { // Month is 0-based, so add 1 for display
+                            myMonth = "0" + Integer.toString(month + 1);
+                        } else {
+                            myMonth = Integer.toString(month + 1);
                         }
 
                         String myDay;
-                        if(dayOfMonth<10)
-                        {
-                            myDay="0"+Integer.toString(dayOfMonth);
-                        }
-                        else {
-                            myDay=Integer.toString(dayOfMonth);
+                        if (dayOfMonth < 10) {
+                            myDay = "0" + Integer.toString(dayOfMonth);
+                        } else {
+                            myDay = Integer.toString(dayOfMonth);
                         }
 
-                        textViewDate.setText(year +"-"+ myMonth +"-"+ myDay);
-
-                        eventDueDate = year +"-"+ myMonth +"-"+ myDay;
+                        textViewDate.setText(year + "-" + myMonth + "-" + myDay);
+                        eventDueDate = year + "-" + myMonth + "-" + myDay;
                     }
                 }, year, month, day);
                 datePickerDialog.show();
-
             }
         });
 
-        //setting start time
+        // Setting start time
         textViewStartTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -220,9 +208,6 @@ public class Create_Event extends AppCompatActivity implements OnMapReadyCallbac
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                // Handle the selected time (hourOfDay and minute)
-                                // This method will be called when the user sets the time
-                                // You can perform any action with the selected time here
                                 String myHour, myMinute;
                                 //if minutes are less than 10
                                 if (minute < 10) {
@@ -239,7 +224,6 @@ public class Create_Event extends AppCompatActivity implements OnMapReadyCallbac
 
                                 textViewStartTime.setText(myHour + ":" + myMinute + " hours");
                                 eventStartTime = myHour + ":" + myMinute;
-
                             }
                         },
                         currentHour,
@@ -252,7 +236,7 @@ public class Create_Event extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
-        //end time
+        // Setting end time
         textViewEndTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -267,9 +251,6 @@ public class Create_Event extends AppCompatActivity implements OnMapReadyCallbac
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                // Handle the selected time (hourOfDay and minute)
-                                // This method will be called when the user sets the time
-                                // You can perform any action with the selected time here
                                 String myHour, myMinute;
                                 //if minutes are less than 10
                                 if (minute < 10) {
@@ -286,7 +267,6 @@ public class Create_Event extends AppCompatActivity implements OnMapReadyCallbac
 
                                 textViewEndTime.setText(myHour + ":" + myMinute + " hours");
                                 eventEndTime = myHour + ":" + myMinute;
-
                             }
                         },
                         currentHour,
@@ -299,7 +279,19 @@ public class Create_Event extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
+        // Initialize footer elements
+        initializeFooter();
+    }
 
+    // Initialize footer elements
+    private void initializeFooter() {
+        // Initialiser les éléments du footer
+        buttonHome = findViewById(R.id.buttonHome);
+        buttonAddTask = findViewById(R.id.buttonAddTask);
+        buttonSearchTask = findViewById(R.id.buttonSearchTask);
+
+        // Configurer le footer
+        setupFooter();
     }
 
     // Check if location permissions are granted, and request them if not
@@ -315,11 +307,9 @@ public class Create_Event extends AppCompatActivity implements OnMapReadyCallbac
                     LOCATION_PERMISSION_REQUEST_CODE);
         } else {
             // Permissions already granted, proceed with your location-based logic
-            // Your code to work with location goes here
             showMapDialog();
         }
     }
-
 
     // Method to show the map dialog
     private void showMapDialog() {
@@ -327,12 +317,10 @@ public class Create_Event extends AppCompatActivity implements OnMapReadyCallbac
         mapDialog = new Dialog(this);
         mapDialog.setContentView(R.layout.map_view_layout);
 
-
         // Initialize the MapView
         mapView = mapDialog.findViewById(R.id.mapViewMain);
         mapView.onCreate(null);
         mapView.getMapAsync(this);
-
 
         // Show the dialog
         mapDialog.show();
@@ -341,7 +329,6 @@ public class Create_Event extends AppCompatActivity implements OnMapReadyCallbac
         if (mapView != null) {
             mapView.onResume();
         }
-
     }
 
     //start to handle mapview lifecycle activities
@@ -380,11 +367,10 @@ public class Create_Event extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    //end
+    // Save event to Firebase
     private void saveTask() {
         eventTitle = editTextTaskTitle.getText().toString().trim();
         eventDescription = editTextTaskDescription.getText().toString().trim();
-
 
         if (eventTitle.isEmpty()) {
             editTextTaskTitle.setError("Cannot be blank!");
@@ -404,7 +390,6 @@ public class Create_Event extends AppCompatActivity implements OnMapReadyCallbac
         } else if (eventLocationName.isEmpty()) {
             textViewLocation.setError("Cannot be blank");
         } else {
-
             progressBar.setVisibility(View.VISIBLE);
             Event_Class newEvent = new Event_Class(eventTitle, eventDescription, eventDueDate, eventStartTime, eventEndTime, eventCategory, eventLocationName);
             eventReference.child(userId).child(eventDueDate).child(eventTitle).setValue(newEvent).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -413,28 +398,21 @@ public class Create_Event extends AppCompatActivity implements OnMapReadyCallbac
                     if (task.isSuccessful()) {
                         //event data will be saved successfully
                         progressBar.setVisibility(View.GONE);
-                       // Toast.makeText(Create_Event.this, "Event Saved Successfully", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(Create_Event.this, "Event Saved Successfully", Toast.LENGTH_SHORT).show();
 
                         Intent myIntent = new Intent(Create_Event.this, APIMainActivity.class);
                         myIntent.putExtra("data_object", newEvent);
                         startActivity(myIntent);
                         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                         finish();
-
-
                     } else {
                         // Failed to save user data
                         progressBar.setVisibility(View.GONE);
                         Toast.makeText(Create_Event.this, "Failed to save new event!", Toast.LENGTH_SHORT).show();
-
                     }
                 }
             });
-
-
         }
-
-
     }
 
     @Override
@@ -444,12 +422,11 @@ public class Create_Event extends AppCompatActivity implements OnMapReadyCallbac
         double longitude = latLng.longitude;
 
         // Get the name of the location using reverse geocoding (optional)
-         eventLocationName = getLocationNameFromLatLng(latLng).toString();
+        eventLocationName = getLocationNameFromLatLng(latLng).toString();
         textViewLocation.setText(eventLocationName);
         // Do something with the latitude, longitude, and locationName, such as displaying in a TextView or creating a marker
         // Example:
         Toast.makeText(this, "Clicked at: " + latitude + ", " + longitude + ", " + eventLocationName, Toast.LENGTH_SHORT).show();
-
     }
 
     @Override
@@ -460,7 +437,6 @@ public class Create_Event extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
-
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -492,5 +468,66 @@ public class Create_Event extends AppCompatActivity implements OnMapReadyCallbac
             e.printStackTrace();
         }
         return "Unknown location";
+    }
+
+    // Setup footer navigation
+    private void setupFooter() {
+        // Home button
+        buttonHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Create_Event.this, Home_Page.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        // Add Task button
+        buttonAddTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showEventTaskDialog();
+            }
+        });
+
+        // Search Task button
+        buttonSearchTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Create_Event.this, Search_Task.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+            }
+        });
+    }
+
+    private void showEventTaskDialog() {
+        Dialog categoryDialog = new Dialog(this);
+        categoryDialog.setContentView(R.layout.event_task_dialog_layout);
+
+        View viewTaskDialog = categoryDialog.findViewById(R.id.viewTaskDialog);
+        View viewEventDialog = categoryDialog.findViewById(R.id.viewEventDialog);
+
+        viewEventDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Create_Event.this, Create_Event.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                categoryDialog.dismiss();
+            }
+        });
+
+        viewTaskDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Create_Event.this, Create_Task.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                categoryDialog.dismiss();
+            }
+        });
+
+        categoryDialog.show();
     }
 }

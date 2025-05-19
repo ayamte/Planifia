@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
-        android:background="@drawable/create_task_background"
+        android:background="@drawable/textview_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -61,7 +61,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
-                        android:background="#FFFDD0"
+                        android:background="#FFFFFF"
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
                         android:text="Title"
@@ -89,7 +89,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
-                        android:background="#FFFDD0"
+                        android:background="#FFFFFF"
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
                         android:text="Description"
@@ -117,7 +117,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
-                        android:background="#FFFDD0"
+                        android:background="#FFFFFF"
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
                         android:text="Set Date"
@@ -144,7 +144,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
-                        android:background="#FFFDD0"
+                        android:background="#FFFFFF"
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
                         android:text="Start Time"
@@ -169,7 +169,7 @@
                         android:layout_marginTop="16dp"
                         android:background="@drawable/button_background"
                         android:text="Save Task"
-                        android:textColor="#FFFDD0"
+                        android:textColor="#FFFFFF"
                         android:textSize="20sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -207,7 +207,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
-                        android:background="#FFFDD0"
+                        android:background="#FFFFFF"
                         android:paddingLeft="5dp"
                         android:paddingEnd="5dp"
                         android:text="End Time"
@@ -226,7 +226,7 @@
         android:layout_marginBottom="32dp"
         android:elevation="5.1dp"
         android:text="Create New Task"
-        android:textColor="#FFFDD0"
+        android:textColor="#FFFFFF"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -241,5 +241,86 @@
         app:layout_constraintBottom_toTopOf="@+id/textView20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/footerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#FFFFFF"
+        android:elevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <!-- Bouton Home -->
+
+        <ImageView
+            android:id="@+id/buttonHome"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_home"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/buttonAddTask"
+            app:layout_constraintHorizontal_bias="0.544"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.444" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@+id/buttonHome"
+            app:layout_constraintStart_toStartOf="@+id/buttonHome"
+            app:layout_constraintEnd_toEndOf="@+id/buttonHome" />
+
+        <!-- Bouton Add Task avec cercle bleu -->
+        <FrameLayout
+            android:id="@+id/buttonAddTask"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/blue_circle" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_add"
+                app:tint="#FFFFFF" />
+        </FrameLayout>
+
+        <!-- Bouton Search Task -->
+
+        <ImageView
+            android:id="@+id/buttonSearchTask"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_search"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.464"
+            app:layout_constraintStart_toEndOf="@+id/buttonAddTask"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.444" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@+id/buttonSearchTask"
+            app:layout_constraintStart_toStartOf="@+id/buttonSearchTask"
+            app:layout_constraintEnd_toEndOf="@+id/buttonSearchTask" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
