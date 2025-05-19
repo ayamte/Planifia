@@ -27,305 +27,162 @@ import com.squareup.picasso.Picasso;
 import android.content.SharedPreferences;
 import android.content.Context;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
 public class Home_Page extends AppCompatActivity {
-    View viewMyTasks, viewNewTask, viewSearchTask, viewMyTrack, viewTaskDialog, viewEventDialog, viewUserProfile;
-    View viewWorkCategory, viewFitnessCategory, viewSchoolCategory, viewPersonalCategory, viewFinanceCategory, viewSharedTasksCategory;
-    View viewAIPriorities;
-    ConstraintLayout constraintLayoutTasks;
+    View viewMyEvents, viewMyTasks, viewMyTrack, viewAIPriorities, viewHomeUserProfile;
+    FrameLayout buttonAddTask;
+    ImageView buttonHome, buttonSearchTask, imageViewUserIcon;
 
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
     DatabaseReference userReference;
     private static final int REQUEST_GOOGLE_CALENDAR = 1;
 
-    ImageView imageViewUserProfileHome;
     TextView textViewUserWelcomeText;
-    ImageView imageViewGoogleCalendar;
     Button buttonLogout;
-
-    private Dialog categoryDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
+        // Initialiser Firebase
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-
-        //get database reference to read users details
         userReference = FirebaseDatabase.getInstance().getReference("users");
 
-        imageViewUserProfileHome = (ImageView) this.findViewById(R.id.imageViewUserProfileHome);
-        textViewUserWelcomeText = (TextView) this.findViewById(R.id.textViewUserWelcomeText);
+        // Initialiser les vues
+        textViewUserWelcomeText = findViewById(R.id.textViewUserWelcomeText);
+        viewHomeUserProfile = findViewById(R.id.viewHomeUserProfile);
+        imageViewUserIcon = findViewById(R.id.imageViewUserIcon);
+        buttonLogout = findViewById(R.id.buttonLogout);
+
+        // Initialiser les vues des carreaux
+        viewMyEvents = findViewById(R.id.viewMyEvents);
+        viewMyTasks = findViewById(R.id.viewMyTasks);
+        viewMyTrack = findViewById(R.id.viewMyTrack);
+        viewAIPriorities = findViewById(R.id.viewAIPriorities);
+
+        // Initialiser les éléments du footer
+        buttonHome = findViewById(R.id.buttonHome);
+        buttonAddTask = findViewById(R.id.buttonAddTask);
+        buttonSearchTask = findViewById(R.id.buttonSearchTask);
+
+        // Configurer le gestionnaire de notifications
         SmartNotificationManager smartNotificationManager = new SmartNotificationManager(this);
         smartNotificationManager.scheduleSmartReminders();
-        //set username on dashboard
+
+        // Lire et afficher le nom d'utilisateur
         readUserName();
-        viewAIPriorities = (View) this.findViewById(R.id.viewAIPriorities);
-        viewAIPriorities.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent myIntent = new Intent(Home_Page.this, PrioritizedTasksActivity.class);
-                startActivity(myIntent);
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-            }
-        });
-        if (firebaseUser != null) {
-            // Set User DP (After user has uploaded)
-            Uri uri = firebaseUser.getPhotoUrl();
 
-            if (uri != null) {
-                // ImageViewer setImageURI() should not be used with regular URIs. So we are using Picasso
-                //  view60.setBackground(getResources().getDrawable(R.drawable.white_background_circle));
-                Picasso.get().load(uri)
-                        .transform(new RoundedTransformation())
-                        .into(imageViewUserProfileHome);
-            } else {
-                // view60.setBackground(getResources().getDrawable(R.drawable.white_background_circle));
-                imageViewUserProfileHome.setBackground(getResources().getDrawable(R.drawable.error_person));
-            }
-        } else {
-            // view60.setBackground(getResources().getDrawable(R.drawable.white_background_circle));
-            imageViewUserProfileHome.setBackground(getResources().getDrawable(R.drawable.error_person));
-        }
+        // Configurer le profil utilisateur
+        setupUserProfile();
 
-        //imageView that directs user to their Google Calendar
-        imageViewGoogleCalendar = (ImageView) this.findViewById(R.id.imageViewGoogleCalendar);
-        imageViewGoogleCalendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Open Google Calendar
-                showGoogleAlertDialog();
-            }
-        });
+        // Configurer les clics sur les carreaux
+        setupCardClicks();
 
-        // Initialiser le bouton de déconnexion
-        buttonLogout = (Button) findViewById(R.id.buttonLogout);
+        // Configurer le footer
+        setupFooter();
+
+        // Configurer le bouton de déconnexion
         buttonLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 logoutUser();
             }
         });
+    }
 
-        viewUserProfile = (View) this.findViewById(R.id.viewHomeUserProfile);
-        viewUserProfile.setOnClickListener(new View.OnClickListener() {
+    private void setupUserProfile() {
+        // Configurer le clic sur le profil
+        viewHomeUserProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(Home_Page.this, User_Profile_Activity.class);
-                startActivity(myIntent);
+                Intent intent = new Intent(Home_Page.this, User_Profile_Activity.class);
+                startActivity(intent);
                 overridePendingTransition(R.anim.new_slide_in, R.anim.new_slide_out);
             }
         });
+    }
 
-        constraintLayoutTasks = (ConstraintLayout) this.findViewById(R.id.constraintLayoutTasks);
-        constraintLayoutTasks.setOnClickListener(new View.OnClickListener() {
+    private void setupCardClicks() {
+        // My Events - Ouvre Google Calendar
+        viewMyEvents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                constraintLayoutTasks.setVisibility(View.GONE);
+                // Afficher la boîte de dialogue Google Calendar
+                showGoogleAlertDialog();
             }
         });
 
-        //view My Event_Class
-        viewMyTasks = (View) this.findViewById(R.id.viewMyTasks);
+        // My Tasks - Affiche le dialogue de sélection de catégorie
         viewMyTasks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                constraintLayoutTasks.setVisibility(View.VISIBLE);
+                // Afficher le dialogue de sélection de catégorie
+                showCategorySelectionDialog();
+            }
+        });
+
+        // My Track
+        viewMyTrack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Home_Page.this, Track_Tasks_Activity.class);
+                startActivity(intent);
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
             }
         });
 
-        //create new Task
-        viewNewTask = (View) this.findViewById(R.id.viewNewTask);
-        viewNewTask.setOnClickListener(new View.OnClickListener() {
+        // AI Priorities
+        viewAIPriorities.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Home_Page.this, PrioritizedTasksActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+            }
+        });
+    }
+
+    private void setupFooter() {
+        // Home button
+        buttonHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Déjà sur la page d'accueil, ne rien faire
+                Toast.makeText(Home_Page.this, "Vous êtes déjà sur la page d'accueil", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Add Task button
+        buttonAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showEventTaskDialog();
             }
         });
 
-        //search for a task
-        viewSearchTask = (View) this.findViewById(R.id.viewSearchTask);
-        viewSearchTask.setOnClickListener(new View.OnClickListener() {
+        // Search Task button
+        buttonSearchTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(Home_Page.this, Search_Task.class);
-                startActivity(myIntent);
+                Intent intent = new Intent(Home_Page.this, Search_Task.class);
+                startActivity(intent);
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
             }
         });
-
-        //check my track
-        viewMyTrack = (View) this.findViewById(R.id.viewMyTrack);
-        viewMyTrack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // constraintLayoutTasks.setVisibility(View.VISIBLE);
-                Intent myIntent = new Intent(Home_Page.this, Track_Tasks_Activity.class);
-                startActivity(myIntent);
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-            }
-        });
-
-        //Finance View Tasks view
-        viewFinanceCategory = (View) this.findViewById(R.id.viewFinanceCategory);
-        viewFinanceCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // constraintLayoutTasks.setVisibility(View.VISIBLE);
-                Intent myIntent = new Intent(Home_Page.this, view_tasks_activity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("category", "Finance");
-                myIntent.putExtras(bundle);
-                startActivity(myIntent);
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                constraintLayoutTasks.setVisibility(View.GONE);
-            }
-        });
-
-        //Work View Tasks view
-        viewWorkCategory = (View) this.findViewById(R.id.viewWorkCategory);
-        viewWorkCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // constraintLayoutTasks.setVisibility(View.VISIBLE);
-                Intent myIntent = new Intent(Home_Page.this, view_tasks_activity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("category", "Work");
-                myIntent.putExtras(bundle);
-                startActivity(myIntent);
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                constraintLayoutTasks.setVisibility(View.GONE);
-            }
-        });
-
-        //Fitness View Tasks view
-        viewFitnessCategory = (View) this.findViewById(R.id.viewFitnessCategory);
-        viewFitnessCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // constraintLayoutTasks.setVisibility(View.VISIBLE);
-                Intent myIntent = new Intent(Home_Page.this, view_tasks_activity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("category", "Fitness");
-                myIntent.putExtras(bundle);
-                startActivity(myIntent);
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                constraintLayoutTasks.setVisibility(View.GONE);
-            }
-        });
-
-        //School View Tasks view
-        viewSchoolCategory = (View) this.findViewById(R.id.viewSchoolCategory);
-        viewSchoolCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // constraintLayoutTasks.setVisibility(View.VISIBLE);
-                Intent myIntent = new Intent(Home_Page.this, view_tasks_activity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("category", "School");
-                myIntent.putExtras(bundle);
-                startActivity(myIntent);
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                constraintLayoutTasks.setVisibility(View.GONE);
-            }
-        });
-
-        //Personal View Tasks view
-        viewPersonalCategory = (View) this.findViewById(R.id.viewPersonalCategory);
-        viewPersonalCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // constraintLayoutTasks.setVisibility(View.VISIBLE);
-                Intent myIntent = new Intent(Home_Page.this, view_tasks_activity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("category", "Personal");
-                myIntent.putExtras(bundle);
-                startActivity(myIntent);
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                constraintLayoutTasks.setVisibility(View.GONE);
-            }
-        });
-
-        //Shared Tasks view
-        viewSharedTasksCategory = (View) this.findViewById(R.id.viewSharedTaskCategory);
-        viewSharedTasksCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // constraintLayoutTasks.setVisibility(View.VISIBLE);
-                Intent myIntent = new Intent(Home_Page.this, view_tasks_activity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("category", "Shared");
-                myIntent.putExtras(bundle);
-                startActivity(myIntent);
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                constraintLayoutTasks.setVisibility(View.GONE);
-            }
-        });
-    }
-
-    // Method to open Google Calendar
-    private void showGoogleAlertDialog() {
-        // Set up the alert builder
-        AlertDialog.Builder builder = new AlertDialog.Builder(Home_Page.this);
-        builder.setTitle("Google Calendar");
-        builder.setMessage("Do you want to proceed to check your Google Calendar Events?");
-
-        // Open email Apps if User clicks/taps Continue button
-        builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                // Create an implicit intent to view the calendar
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("https://calendar.google.com"));
-                startActivityForResult(intent, REQUEST_GOOGLE_CALENDAR);
-                // You can also use the following URI to open the Google Calendar app directly:
-                // intent.setData(Uri.parse("content://com.android.calendar/time"));
-
-                /*
-                // Check if there's an app that can handle this intent before launching it
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intent);
-                } else {
-
-                    // Handle the case where Google Calendar app is not installed or no app can handle the intent.
-                    // You can show a toast or a dialog to inform the user.
-                    Toast.makeText(Home_Page.this, "Install Google app", Toast.LENGTH_SHORT).show();
-                }
-                */
-            }
-        });
-
-        // Create the AlertDialog
-        AlertDialog alertDialog = builder.create();
-
-        // Show the AlertDialog
-        alertDialog.show();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == REQUEST_GOOGLE_CALENDAR) {
-            // The user has returned from Google Calendar.
-            // Add any additional logic you may need here.
-        }
     }
 
     void readUserName() {
         String userId = firebaseUser.getUid();
-        String email = firebaseUser.getEmail();
         userReference.child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {
                     DataSnapshot thisDataSnapshot = task.getResult();
                     String userName = String.valueOf(thisDataSnapshot.child("username").getValue());
-                    // Toast.makeText(Patient_Main_Page_NEW.this," FIRSTNAME "+firstname ,Toast.LENGTH_SHORT).show();
                     if (userName.equals("null")) {
                         textViewUserWelcomeText.setText("Kindly Register With Us.");
                     } else {
@@ -339,20 +196,19 @@ public class Home_Page extends AppCompatActivity {
     }
 
     private void showEventTaskDialog() {
-        // Initialize the dialog
-        categoryDialog = new Dialog(this);
+        // Initialiser la boîte de dialogue
+        Dialog categoryDialog = new Dialog(this);
         categoryDialog.setContentView(R.layout.event_task_dialog_layout);
 
-        viewTaskDialog = categoryDialog.findViewById(R.id.viewTaskDialog);
-        viewEventDialog = categoryDialog.findViewById(R.id.viewEventDialog);
+        View viewTaskDialog = categoryDialog.findViewById(R.id.viewTaskDialog);
+        View viewEventDialog = categoryDialog.findViewById(R.id.viewEventDialog);
 
         viewEventDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(Home_Page.this, Create_Event.class);
-                startActivity(myIntent);
+                Intent intent = new Intent(Home_Page.this, Create_Event.class);
+                startActivity(intent);
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                //close the dialog
                 categoryDialog.dismiss();
             }
         });
@@ -360,20 +216,141 @@ public class Home_Page extends AppCompatActivity {
         viewTaskDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(Home_Page.this, Create_Task.class);
-                startActivity(myIntent);
+                Intent intent = new Intent(Home_Page.this, Create_Task.class);
+                startActivity(intent);
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                //close the dialog
                 categoryDialog.dismiss();
             }
         });
 
-        // Show the dialog
+        // Afficher la boîte de dialogue
+        categoryDialog.show();
+    }
+
+    // Méthode pour afficher la boîte de dialogue Google Calendar
+    private void showGoogleAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Home_Page.this);
+        builder.setTitle("Google Calendar");
+        builder.setMessage("Do you want to proceed to check your Google Calendar Events?");
+
+        builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://calendar.google.com"));
+                startActivityForResult(intent, REQUEST_GOOGLE_CALENDAR);
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    // Méthode pour afficher la boîte de dialogue de sélection de catégorie
+    private void showCategorySelectionDialog() {
+        // Créer une boîte de dialogue pour la sélection de catégorie
+        Dialog categoryDialog = new Dialog(this);
+        categoryDialog.setContentView(R.layout.category_selection_dialog);
+
+        // Trouver les vues de catégorie dans la boîte de dialogue
+        View viewFinanceCategory = categoryDialog.findViewById(R.id.viewFinanceCategory);
+        View viewWorkCategory = categoryDialog.findViewById(R.id.viewWorkCategory);
+        View viewFitnessCategory = categoryDialog.findViewById(R.id.viewFitnessCategory);
+        View viewSchoolCategory = categoryDialog.findViewById(R.id.viewSchoolCategory);
+        View viewPersonalCategory = categoryDialog.findViewById(R.id.viewPersonalCategory);
+        View viewSharedTaskCategory = categoryDialog.findViewById(R.id.viewSharedTaskCategory);
+
+        // Configurer les écouteurs de clic pour chaque catégorie
+        viewFinanceCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Home_Page.this, view_tasks_activity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("category", "Finance");
+                intent.putExtras(bundle);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                categoryDialog.dismiss();
+            }
+        });
+
+        viewWorkCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Home_Page.this, view_tasks_activity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("category", "Work");
+                intent.putExtras(bundle);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                categoryDialog.dismiss();
+            }
+        });
+
+        viewFitnessCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Home_Page.this, view_tasks_activity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("category", "Fitness");
+                intent.putExtras(bundle);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                categoryDialog.dismiss();
+            }
+        });
+
+        viewSchoolCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Home_Page.this, view_tasks_activity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("category", "School");
+                intent.putExtras(bundle);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                categoryDialog.dismiss();
+            }
+        });
+
+        viewPersonalCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Home_Page.this, view_tasks_activity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("category", "Personal");
+                intent.putExtras(bundle);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                categoryDialog.dismiss();
+            }
+        });
+
+        viewSharedTaskCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Home_Page.this, view_tasks_activity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("category", "Shared");
+                intent.putExtras(bundle);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                categoryDialog.dismiss();
+            }
+        });
+
+        // Afficher la boîte de dialogue
         categoryDialog.show();
     }
 
     private void logoutUser() {
-        // Afficher une boîte de dialogue de confirmation
         AlertDialog.Builder builder = new AlertDialog.Builder(Home_Page.this);
         builder.setTitle("Déconnexion");
         builder.setMessage("Êtes-vous sûr de vouloir vous déconnecter ?");
@@ -381,13 +358,8 @@ public class Home_Page extends AppCompatActivity {
         builder.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // 1. Déconnecter l'utilisateur de Firebase
                 FirebaseAuth.getInstance().signOut();
-
-                // 2. Mettre à jour le statut de connexion dans SharedPreferences
                 saveLoginStatus(false);
-
-                // 3. Rediriger vers l'écran de connexion
                 Intent intent = new Intent(Home_Page.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
@@ -398,11 +370,9 @@ public class Home_Page extends AppCompatActivity {
         builder.setNegativeButton("Non", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // Ne rien faire, fermer la boîte de dialogue
                 dialogInterface.dismiss();
             }
         });
-
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
@@ -412,5 +382,14 @@ public class Home_Page extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean("isLoggedIn", isLoggedIn);
         editor.apply();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_GOOGLE_CALENDAR) {
+            // L'utilisateur est revenu de Google Calendar
+        }
     }
 }

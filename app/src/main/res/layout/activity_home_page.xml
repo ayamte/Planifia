@@ -7,111 +7,17 @@
     android:background="@drawable/wooden_background"
     tools:context=".Home_Page">
 
+    <!-- Section supérieure avec le fond -->
     <View
         android:id="@+id/view"
-        android:layout_width="0dp"
-        android:layout_height="300dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
         android:background="@drawable/gradient_brown_square"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:id="@+id/view2"
-        android:layout_width="320dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="220dp"
-        android:background="@drawable/rounded_green_background"
-        android:elevation="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view" />
-
-    <View
-        android:id="@+id/viewNewTask"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/rounded_green_background"
-        android:elevation="5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view2" />
-
-    <View
-        android:id="@+id/viewMyTasks"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/rounded_green_background"
-        android:elevation="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view2" />
-
-    <View
-        android:id="@+id/viewSearchTask"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/rounded_green_background"
-        android:elevation="5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewNewTask" />
-
-    <View
-        android:id="@+id/viewMyTrack"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/rounded_green_background"
-        android:elevation="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewMyTasks" />
-    <View
-        android:id="@+id/viewAIPriorities"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/button_background"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewMyTrack" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="AI Task Priorities"
-        android:textColor="#FFFDD0"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="@+id/viewAIPriorities"
-        app:layout_constraintEnd_toEndOf="@+id/viewAIPriorities"
-        app:layout_constraintStart_toStartOf="@+id/viewAIPriorities"
-        app:layout_constraintTop_toTopOf="@+id/viewAIPriorities" />
-
-    <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="16dp"
-        android:src="@drawable/ic_ai"
-        app:layout_constraintBottom_toBottomOf="@+id/viewAIPriorities"
-        app:layout_constraintStart_toStartOf="@+id/viewAIPriorities"
-        app:layout_constraintTop_toTopOf="@+id/viewAIPriorities" />
-
-    <View
-        android:id="@+id/view9"
-        android:layout_width="330dp"
-        android:layout_height="10dp"
-        android:background="@drawable/textview_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewSearchTask" />
-
+    <!-- Profil utilisateur (cercle marron) -->
     <View
         android:id="@+id/viewHomeUserProfile"
         android:layout_width="80dp"
@@ -123,6 +29,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view" />
 
+    <!-- Icône utilisateur au-dessus du cercle marron -->
+    <ImageView
+        android:id="@+id/imageViewUserIcon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/photo_profil"
+        android:elevation="6dp"
+        app:tint="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/viewHomeUserProfile"
+        app:layout_constraintEnd_toEndOf="@+id/viewHomeUserProfile"
+        app:layout_constraintStart_toStartOf="@+id/viewHomeUserProfile"
+        app:layout_constraintTop_toTopOf="@+id/viewHomeUserProfile" />
+
+    <!-- Bouton de déconnexion -->
     <Button
         android:id="@+id/buttonLogout"
         android:layout_width="wrap_content"
@@ -136,6 +56,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Message de bienvenue -->
     <TextView
         android:id="@+id/textViewUserWelcomeText"
         android:layout_width="wrap_content"
@@ -149,412 +70,186 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewHomeUserProfile" />
 
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+    <!-- Première rangée de carreaux -->
+    <View
+        android:id="@+id/viewMyEvents"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Dream big, organize small, and let your tasks lead to your rise above all."
-        android:textColor="#faf0e6"
-        android:textSize="18sp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/blurred_background"
+        android:elevation="5dp"
+        app:layout_constraintEnd_toStartOf="@+id/viewMyTasks"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewUserWelcomeText" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="60dp"
-        android:layout_height="40dp"
+    <TextView
+        android:id="@+id/textViewMyEvents"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My Events"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/viewMyEvents"
+        app:layout_constraintEnd_toEndOf="@+id/viewMyEvents"
+        app:layout_constraintStart_toStartOf="@+id/viewMyEvents"
+        app:layout_constraintTop_toTopOf="@+id/viewMyEvents" />
+
+    <View
+        android:id="@+id/viewMyTasks"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
         android:layout_marginStart="8dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/hand"
-        app:layout_constraintBottom_toTopOf="@+id/textView7"
-        app:layout_constraintStart_toEndOf="@+id/textViewUserWelcomeText" />
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/blurred_background"
+        android:elevation="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/viewMyEvents"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUserWelcomeText" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/textViewMyTasks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:elevation="5.1dp"
-        android:text=" Task/Event"
-        android:textColor="#663300"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="@+id/viewNewTask"
-        app:layout_constraintEnd_toEndOf="@+id/viewNewTask"
-        app:layout_constraintStart_toStartOf="@+id/viewNewTask" />
-
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:elevation="5.1dp"
-        android:text="Search Task"
-        android:textColor="#663300"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="@+id/viewSearchTask"
-        app:layout_constraintEnd_toEndOf="@+id/viewSearchTask"
-        app:layout_constraintStart_toStartOf="@+id/viewSearchTask" />
-
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:elevation="5.1dp"
-        android:text="My Track"
-        android:textColor="#663300"
-        android:textSize="22sp"
-        app:layout_constraintBottom_toBottomOf="@+id/viewMyTrack"
-        app:layout_constraintEnd_toEndOf="@+id/viewMyTrack"
-        app:layout_constraintStart_toStartOf="@+id/viewMyTrack" />
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="75dp"
-        android:layout_height="68dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/baseline_library_add_24"
-        android:elevation="5.1dp"
-        app:layout_constraintEnd_toEndOf="@+id/viewNewTask"
-        app:layout_constraintStart_toStartOf="@+id/viewNewTask"
-        app:layout_constraintTop_toTopOf="@+id/viewNewTask" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/baseline_manage_search_24"
-        android:elevation="5.1dp"
-        app:layout_constraintEnd_toEndOf="@+id/viewSearchTask"
-        app:layout_constraintStart_toStartOf="@+id/viewSearchTask"
-        app:layout_constraintTop_toTopOf="@+id/viewSearchTask" />
-
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/analytics_24"
-        android:elevation="5.1dp"
-        app:layout_constraintEnd_toEndOf="@+id/viewMyTrack"
-        app:layout_constraintStart_toStartOf="@+id/viewMyTrack"
-        app:layout_constraintTop_toTopOf="@+id/viewMyTrack" />
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:elevation="5.1dp"
         android:text="My Tasks"
-        android:textColor="#663300"
-        android:textSize="22sp"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/viewMyTasks"
-        app:layout_constraintEnd_toEndOf="@+id/viewMyTasks"
-        app:layout_constraintStart_toStartOf="@+id/viewMyTasks" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="65dp"
-        android:layout_height="65dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/baseline_assignment_24"
-        android:elevation="5.1dp"
         app:layout_constraintEnd_toEndOf="@+id/viewMyTasks"
         app:layout_constraintStart_toStartOf="@+id/viewMyTasks"
         app:layout_constraintTop_toTopOf="@+id/viewMyTasks" />
 
-    <ImageView
-        android:id="@+id/imageViewUserProfileHome"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:background="@drawable/personwhite"
-        android:elevation="5.1dp"
-        app:layout_constraintBottom_toBottomOf="@+id/viewHomeUserProfile"
-        app:layout_constraintEnd_toEndOf="@+id/viewHomeUserProfile"
-        app:layout_constraintStart_toStartOf="@+id/viewHomeUserProfile"
-        app:layout_constraintTop_toTopOf="@+id/viewHomeUserProfile" />
+    <!-- Deuxième rangée de carreaux -->
+    <View
+        android:id="@+id/viewMyTrack"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/blurred_background"
+        android:elevation="5dp"
+        app:layout_constraintEnd_toStartOf="@+id/viewAIPriorities"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewMyEvents" />
 
+    <TextView
+        android:id="@+id/textViewMyTrack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My Track"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/viewMyTrack"
+        app:layout_constraintEnd_toEndOf="@+id/viewMyTrack"
+        app:layout_constraintStart_toStartOf="@+id/viewMyTrack"
+        app:layout_constraintTop_toTopOf="@+id/viewMyTrack" />
+
+    <View
+        android:id="@+id/viewAIPriorities"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/blurred_background"
+        android:elevation="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/viewMyTrack"
+        app:layout_constraintTop_toBottomOf="@+id/viewMyTasks" />
+
+    <TextView
+        android:id="@+id/textViewAIPriorities"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AI Priorities"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/viewAIPriorities"
+        app:layout_constraintEnd_toEndOf="@+id/viewAIPriorities"
+        app:layout_constraintStart_toStartOf="@+id/viewAIPriorities"
+        app:layout_constraintTop_toTopOf="@+id/viewAIPriorities" />
+
+    <!-- Footer avec les boutons -->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayoutTasks"
+        android:id="@+id/footerLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#8AC0C0C0"
-        android:elevation="5.5dp"
-        android:visibility="gone"
+        android:layout_height="60dp"
+        android:background="#FFFFFF"
+        android:elevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
-        <ScrollView
-            android:layout_width="350dp"
-            android:layout_height="500dp"
-            android:background="@drawable/rounded_brown_square"
+        <!-- Bouton Home -->
+        <ImageView
+            android:id="@+id/buttonHome"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_home"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/buttonAddTask"
+            app:layout_constraintHorizontal_bias="0.2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@+id/buttonHome"
+            app:layout_constraintStart_toStartOf="@+id/buttonHome"
+            app:layout_constraintEnd_toEndOf="@+id/buttonHome" />
+
+        <!-- Bouton Add Task avec cercle bleu -->
+        <FrameLayout
+            android:id="@+id/buttonAddTask"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:background="@drawable/blue_circle" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_add" />
+        </FrameLayout>
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="600dp">
+        <!-- Bouton Search Task -->
+        <ImageView
+            android:id="@+id/buttonSearchTask"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_search"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.8"
+            app:layout_constraintStart_toEndOf="@+id/buttonAddTask"
+            app:layout_constraintTop_toTopOf="parent" />
 
-                        <View
-                            android:id="@+id/viewWorkCategory"
-                            android:layout_width="150dp"
-                            android:layout_height="150dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/rounded_green_background"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <View
-                            android:id="@+id/viewFitnessCategory"
-                            android:layout_width="150dp"
-                            android:layout_height="150dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:background="@drawable/rounded_green_background"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/imageView9"
-                            android:layout_width="65dp"
-                            android:layout_height="65dp"
-                            android:layout_marginStart="24dp"
-                            android:layout_marginTop="24dp"
-                            android:background="@drawable/workout"
-                            app:layout_constraintStart_toStartOf="@+id/viewFitnessCategory"
-                            app:layout_constraintTop_toTopOf="@+id/viewFitnessCategory" />
-
-                        <View
-                            android:id="@+id/viewSchoolCategory"
-                            android:layout_width="150dp"
-                            android:layout_height="150dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="16dp"
-                            android:background="@drawable/rounded_green_background"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/viewWorkCategory" />
-
-                        <ImageView
-                            android:id="@+id/imageView12"
-                            android:layout_width="65dp"
-                            android:layout_height="65dp"
-                            android:layout_marginStart="24dp"
-                            android:layout_marginTop="24dp"
-                            android:background="@drawable/family"
-                            app:layout_constraintStart_toStartOf="@+id/viewSchoolCategory"
-                            app:layout_constraintTop_toTopOf="@+id/viewSchoolCategory" />
-
-                        <View
-                            android:id="@+id/viewPersonalCategory"
-                            android:layout_width="150dp"
-                            android:layout_height="150dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginEnd="8dp"
-                            android:background="@drawable/rounded_green_background"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/viewFitnessCategory" />
-
-                        <ImageView
-                            android:id="@+id/imageView13"
-                            android:layout_width="65dp"
-                            android:layout_height="65dp"
-                            android:layout_marginStart="24dp"
-                            android:layout_marginTop="24dp"
-                            android:background="@drawable/personal"
-                            app:layout_constraintStart_toStartOf="@+id/viewPersonalCategory"
-                            app:layout_constraintTop_toTopOf="@+id/viewPersonalCategory" />
-
-                        <View
-                            android:id="@+id/viewFinanceCategory"
-                            android:layout_width="150dp"
-                            android:layout_height="150dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="16dp"
-                            android:background="@drawable/rounded_green_background"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/viewSchoolCategory" />
-
-                        <ImageView
-                            android:id="@+id/imageView14"
-                            android:layout_width="65dp"
-                            android:layout_height="65dp"
-                            android:layout_marginStart="24dp"
-                            android:layout_marginTop="24dp"
-                            android:background="@drawable/finance"
-                            app:layout_constraintStart_toStartOf="@+id/viewFinanceCategory"
-                            app:layout_constraintTop_toTopOf="@+id/viewFinanceCategory" />
-
-                        <View
-                            android:id="@+id/viewSharedTaskCategory"
-                            android:layout_width="150dp"
-                            android:layout_height="150dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginEnd="8dp"
-                            android:background="@drawable/rounded_green_background"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/viewPersonalCategory" />
-
-                        <ImageView
-                            android:id="@+id/imageView15"
-                            android:layout_width="65dp"
-                            android:layout_height="65dp"
-                            android:layout_marginStart="24dp"
-                            android:layout_marginTop="24dp"
-                            android:background="@drawable/shared"
-                            app:layout_constraintStart_toStartOf="@+id/viewSharedTaskCategory"
-                            app:layout_constraintTop_toTopOf="@+id/viewSharedTaskCategory" />
-
-                        <TextView
-                            android:id="@+id/textView30"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="16dp"
-                            android:text="Work"
-                            android:textColor="#663300"
-                            android:textSize="22sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/viewWorkCategory"
-                            app:layout_constraintEnd_toEndOf="@+id/viewWorkCategory"
-                            app:layout_constraintStart_toStartOf="@+id/viewWorkCategory" />
-
-                        <ImageView
-                            android:id="@+id/imageView8"
-                            android:layout_width="65dp"
-                            android:layout_height="65dp"
-                            android:layout_marginStart="24dp"
-                            android:layout_marginTop="24dp"
-                            android:background="@drawable/work_icon"
-                            app:layout_constraintStart_toStartOf="@+id/viewWorkCategory"
-                            app:layout_constraintTop_toTopOf="@+id/viewWorkCategory" />
-
-                        <TextView
-                            android:id="@+id/textView31"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="16dp"
-                            android:text="Fitness"
-                            android:textColor="#663300"
-                            android:textSize="22sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/viewFitnessCategory"
-                            app:layout_constraintEnd_toEndOf="@+id/viewFitnessCategory"
-                            app:layout_constraintStart_toStartOf="@+id/viewFitnessCategory" />
-
-                        <TextView
-                            android:id="@+id/textView32"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="16dp"
-                            android:text="School"
-                            android:textColor="#663300"
-                            android:textSize="22sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/viewSchoolCategory"
-                            app:layout_constraintEnd_toEndOf="@+id/viewSchoolCategory"
-                            app:layout_constraintStart_toStartOf="@+id/viewSchoolCategory" />
-
-                        <TextView
-                            android:id="@+id/textView33"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="16dp"
-                            android:text="Personal"
-                            android:textColor="#663300"
-                            android:textSize="22sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/viewPersonalCategory"
-                            app:layout_constraintEnd_toEndOf="@+id/viewPersonalCategory"
-                            app:layout_constraintStart_toStartOf="@+id/viewPersonalCategory" />
-
-                        <TextView
-                            android:id="@+id/textView34"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="24dp"
-                            android:text="Finance"
-                            android:textColor="#663300"
-                            android:textSize="22sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/viewFinanceCategory"
-                            app:layout_constraintEnd_toEndOf="@+id/viewFinanceCategory"
-                            app:layout_constraintStart_toStartOf="@+id/viewFinanceCategory" />
-
-                        <TextView
-                            android:id="@+id/textView35"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="24dp"
-                            android:text="Shared Tasks"
-                            android:textColor="#663300"
-                            android:textSize="22sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/viewSharedTaskCategory"
-                            app:layout_constraintEnd_toEndOf="@+id/viewSharedTaskCategory"
-                            app:layout_constraintStart_toStartOf="@+id/viewSharedTaskCategory" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </RelativeLayout>
-            </LinearLayout>
-        </ScrollView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@+id/buttonSearchTask"
+            app:layout_constraintStart_toStartOf="@+id/buttonSearchTask"
+            app:layout_constraintEnd_toEndOf="@+id/buttonSearchTask" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <View
-        android:id="@+id/view10"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="-30dp"
-        android:layout_marginTop="-30dp"
-        android:background="@drawable/circular_view"
-        android:elevation="5.2dp"
-        app:layout_constraintStart_toEndOf="@+id/viewHomeUserProfile"
-        app:layout_constraintTop_toBottomOf="@+id/viewHomeUserProfile" />
-
-    <ImageView
-        android:id="@+id/imageView18"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:background="@drawable/baseline_photo_camera_24"
-        android:elevation="5.3dp"
-        app:layout_constraintBottom_toBottomOf="@+id/view10"
-        app:layout_constraintEnd_toEndOf="@+id/view10"
-        app:layout_constraintStart_toStartOf="@+id/view10"
-        app:layout_constraintTop_toTopOf="@+id/view10" />
-
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:drawableRight="@drawable/baseline_arrow_right_alt_24"
-        android:drawablePadding="5dp"
-        android:elevation="5.1dp"
-        android:text="Go To Events"
-        android:textColor="#663300"
-        android:textSize="22sp"
-        android:textStyle="normal"
-        app:layout_constraintBottom_toBottomOf="@+id/view2"
-        app:layout_constraintEnd_toEndOf="@+id/view2" />
-
-    <ImageView
-        android:id="@+id/imageViewGoogleCalendar"
-        android:layout_width="317dp"
-        android:layout_height="230dp"
-        android:layout_marginTop="-25dp"
-        android:background="@drawable/brown_calendar_guy"
-        android:elevation="5.01dp"
-        app:layout_constraintEnd_toEndOf="@+id/view2"
-        app:layout_constraintStart_toStartOf="@+id/view2"
-        app:layout_constraintTop_toTopOf="@+id/view2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
