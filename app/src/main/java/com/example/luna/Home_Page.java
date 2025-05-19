@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -42,10 +43,14 @@ public class Home_Page extends AppCompatActivity {
     TextView textViewUserWelcomeText;
     Button buttonLogout;
 
+    private static final String TAG = "Home_Page"; // Tag pour les logs
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+
+        Log.d(TAG, "onCreate: Initialisation de Home_Page");
 
         // Initialiser Firebase
         firebaseAuth = FirebaseAuth.getInstance();
@@ -61,6 +66,7 @@ public class Home_Page extends AppCompatActivity {
         // Initialiser les vues des carreaux
         viewMyEvents = findViewById(R.id.viewMyEvents);
         viewMyTasks = findViewById(R.id.viewMyTasks);
+        Log.d(TAG, "onCreate: viewMyTasks initialisé: " + (viewMyTasks != null));
         viewMyTrack = findViewById(R.id.viewMyTrack);
         viewAIPriorities = findViewById(R.id.viewAIPriorities);
 
@@ -81,6 +87,7 @@ public class Home_Page extends AppCompatActivity {
 
         // Configurer les clics sur les carreaux
         setupCardClicks();
+        Log.d(TAG, "onCreate: setupCardClicks appelé");
 
         // Configurer le footer
         setupFooter();
@@ -120,6 +127,7 @@ public class Home_Page extends AppCompatActivity {
         viewMyTasks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d(TAG, "onClick: Clic sur My Tasks détecté");
                 // Afficher le dialogue de sélection de catégorie
                 showCategorySelectionDialog();
             }
@@ -255,101 +263,116 @@ public class Home_Page extends AppCompatActivity {
 
     // Méthode pour afficher la boîte de dialogue de sélection de catégorie
     private void showCategorySelectionDialog() {
-        // Créer une boîte de dialogue pour la sélection de catégorie
-        Dialog categoryDialog = new Dialog(this);
-        categoryDialog.setContentView(R.layout.category_selection_dialog);
+        try {
+            Log.d(TAG, "showCategorySelectionDialog: Début de la méthode");
 
-        // Trouver les vues de catégorie dans la boîte de dialogue
-        View viewFinanceCategory = categoryDialog.findViewById(R.id.viewFinanceCategory);
-        View viewWorkCategory = categoryDialog.findViewById(R.id.viewWorkCategory);
-        View viewFitnessCategory = categoryDialog.findViewById(R.id.viewFitnessCategory);
-        View viewSchoolCategory = categoryDialog.findViewById(R.id.viewSchoolCategory);
-        View viewPersonalCategory = categoryDialog.findViewById(R.id.viewPersonalCategory);
-        View viewSharedTaskCategory = categoryDialog.findViewById(R.id.viewSharedTaskCategory);
+            // Créer une boîte de dialogue pour la sélection de catégorie
+            Dialog categoryDialog = new Dialog(Home_Page.this);
+            Log.d(TAG, "showCategorySelectionDialog: Dialog créé");
 
-        // Configurer les écouteurs de clic pour chaque catégorie
-        viewFinanceCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Home_Page.this, view_tasks_activity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("category", "Finance");
-                intent.putExtras(bundle);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                categoryDialog.dismiss();
-            }
-        });
+            categoryDialog.setContentView(R.layout.category_selection_dialog);
+            Log.d(TAG, "showCategorySelectionDialog: Content view défini");
 
-        viewWorkCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Home_Page.this, view_tasks_activity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("category", "Work");
-                intent.putExtras(bundle);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                categoryDialog.dismiss();
-            }
-        });
+            // Trouver les vues de catégorie dans la boîte de dialogue
+            View viewPersonalCategory = categoryDialog.findViewById(R.id.viewPersonalCategory);
+            View viewFinanceCategory = categoryDialog.findViewById(R.id.viewFinanceCategory);
+            View viewLeisureCategory = categoryDialog.findViewById(R.id.viewLeisureCategory);
+            View viewHealthCategory = categoryDialog.findViewById(R.id.viewHealthCategory);
+            View viewSelfCategory = categoryDialog.findViewById(R.id.viewSelfCategory);
+            View viewWorkCategory = categoryDialog.findViewById(R.id.viewWorkCategory);
 
-        viewFitnessCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Home_Page.this, view_tasks_activity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("category", "Fitness");
-                intent.putExtras(bundle);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                categoryDialog.dismiss();
-            }
-        });
+            Log.d(TAG, "showCategorySelectionDialog: Vues des catégories trouvées");
 
-        viewSchoolCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Home_Page.this, view_tasks_activity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("category", "School");
-                intent.putExtras(bundle);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                categoryDialog.dismiss();
-            }
-        });
+            // Configurer les écouteurs de clic pour chaque catégorie
+            viewPersonalCategory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Home_Page.this, view_tasks_activity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("category", "Personal");
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                    categoryDialog.dismiss();
+                }
+            });
 
-        viewPersonalCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Home_Page.this, view_tasks_activity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("category", "Personal");
-                intent.putExtras(bundle);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                categoryDialog.dismiss();
-            }
-        });
+            viewFinanceCategory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Home_Page.this, view_tasks_activity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("category", "Finance");
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                    categoryDialog.dismiss();
+                }
+            });
 
-        viewSharedTaskCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Home_Page.this, view_tasks_activity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("category", "Shared");
-                intent.putExtras(bundle);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                categoryDialog.dismiss();
-            }
-        });
+            viewLeisureCategory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Home_Page.this, view_tasks_activity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("category", "Leisure");
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                    categoryDialog.dismiss();
+                }
+            });
 
-        // Afficher la boîte de dialogue
-        categoryDialog.show();
+            viewHealthCategory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Home_Page.this, view_tasks_activity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("category", "Health");
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                    categoryDialog.dismiss();
+                }
+            });
+
+            viewSelfCategory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Home_Page.this, view_tasks_activity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("category", "Self");
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                    categoryDialog.dismiss();
+                }
+            });
+
+            viewWorkCategory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Home_Page.this, view_tasks_activity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("category", "Work");
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                    categoryDialog.dismiss();
+                }
+            });
+
+            Log.d(TAG, "showCategorySelectionDialog: Écouteurs de clic configurés");
+
+            // Afficher la boîte de dialogue
+            categoryDialog.show();
+            Log.d(TAG, "showCategorySelectionDialog: Dialog affiché");
+        } catch (Exception e) {
+            Log.e(TAG, "Erreur lors de l'affichage du dialogue: " + e.getMessage());
+            e.printStackTrace();
+            Toast.makeText(this, "Erreur: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
-
     private void logoutUser() {
         AlertDialog.Builder builder = new AlertDialog.Builder(Home_Page.this);
         builder.setTitle("Déconnexion");
@@ -387,9 +410,8 @@ public class Home_Page extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == REQUEST_GOOGLE_CALENDAR) {
-            // L'utilisateur est revenu de Google Calendar
+            // Traiter le résultat si nécessaire
         }
     }
 }

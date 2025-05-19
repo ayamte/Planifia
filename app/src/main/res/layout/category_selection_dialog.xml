@@ -2,90 +2,245 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    >
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="300dp"
+        android:layout_height="550dp"
+        android:background="@drawable/rounded_square"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <TextView
+            android:id="@+id/textViewDialogTitle"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:text="Select Task Category"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Première rangée: Personal et Finance -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/viewPersonalCategory"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:background="#05316a"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewDialogTitle">
+
+            <ImageView
+                android:id="@+id/imageViewPersonalIcon"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/personnal"
+                app:layout_constraintBottom_toTopOf="@+id/textViewPersonalCategory"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textViewDialogTitle"
-                android:layout_width="match_parent"
+                android:id="@+id/textViewPersonalCategory"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select Task Category"
-                android:textSize="20sp"
+                android:text="Personal"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                android:gravity="center"
-                android:layout_marginBottom="16dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-            <View
-                android:id="@+id/viewWorkCategory"
-                android:layout_width="150dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/rounded_green_background"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textViewDialogTitle" />
-
-            <View
-                android:id="@+id/viewFitnessCategory"
-                android:layout_width="150dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/rounded_green_background"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textViewDialogTitle" />
-
-            <View
-                android:id="@+id/viewSchoolCategory"
-                android:layout_width="150dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/rounded_green_background"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/viewWorkCategory" />
-
-            <View
-                android:id="@+id/viewPersonalCategory"
-                android:layout_width="150dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/rounded_green_background"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/viewFitnessCategory" />
-
-            <View
-                android:id="@+id/viewFinanceCategory"
-                android:layout_width="150dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/rounded_green_background"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/viewSchoolCategory" />
-
-            <View
-                android:id="@+id/viewSharedTaskCategory"
-                android:layout_width="150dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/rounded_green_background"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/viewPersonalCategory" />
-
+                app:layout_constraintTop_toBottomOf="@+id/imageViewPersonalIcon" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/viewFinanceCategory"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="#05316a"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewDialogTitle">
+
+            <ImageView
+                android:id="@+id/imageViewFinanceIcon"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/finance"
+                app:layout_constraintBottom_toTopOf="@+id/textViewFinanceCategory"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewFinanceCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Finance"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewFinanceIcon" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Deuxième rangée: Leisure et Health -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/viewLeisureCategory"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:background="#05316a"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/viewPersonalCategory">
+
+            <ImageView
+                android:id="@+id/imageViewLeisureIcon"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/leisure"
+                app:layout_constraintBottom_toTopOf="@+id/textViewLeisureCategory"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewLeisureCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Leisure"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewLeisureIcon" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/viewHealthCategory"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="#05316a"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/viewFinanceCategory">
+
+            <ImageView
+                android:id="@+id/imageViewHealthIcon"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/health"
+                app:layout_constraintBottom_toTopOf="@+id/textViewHealthCategory"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewHealthCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Health"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewHealthIcon" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Troisième rangée: Self et Work -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/viewSelfCategory"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:background="#05316a"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/viewLeisureCategory">
+
+            <ImageView
+                android:id="@+id/imageViewSelfIcon"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/self_care"
+                app:layout_constraintBottom_toTopOf="@+id/textViewSelfCategory"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewSelfCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Self Care"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewSelfIcon" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/viewWorkCategory"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="#05316a"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/viewHealthCategory">
+
+            <ImageView
+                android:id="@+id/imageViewWorkIcon"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/work"
+                app:layout_constraintBottom_toTopOf="@+id/textViewWorkCategory"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewWorkCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Work"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewWorkIcon" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
