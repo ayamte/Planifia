@@ -275,7 +275,7 @@ public class Create_Task extends AppCompatActivity {
          Task_Class taskObj = new Task_Class(taskTitle, taskDescription, taskStartTime, taskDate, taskCategory, status, dateTimeString, taskEndTime);
 
          // Sauvegarder la tâche dans Firebase
-         taskReference.child(userId).child(taskCategory).child(taskTitle).setValue(taskObj)
+         FirebaseDatabase.getInstance().getReference("Categorised Tasks").child(userId).child(taskCategory).child(taskTitle).setValue(taskObj)
                  .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
