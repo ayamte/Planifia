@@ -55,6 +55,15 @@ public class PrioritizedTasksActivity extends AppCompatActivity {
                     taskAdapter.setTasks(prioritizedTasks);
                 }
             }
+
+            @Override
+            public void onError(String errorMessage) {
+                // Handle the error case
+                progressBar.setVisibility(View.GONE);
+                textViewNoTasks.setVisibility(View.VISIBLE);
+                textViewNoTasks.setText("Error: " + errorMessage);
+                recyclerViewPrioritizedTasks.setVisibility(View.GONE);
+            }
         });
     }
 }

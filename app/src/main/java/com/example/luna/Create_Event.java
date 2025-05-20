@@ -69,11 +69,12 @@ public class Create_Event extends AppCompatActivity implements OnMapReadyCallbac
     DatabaseReference eventReference;
     private String[] categoryArray = {
             "Select Category",
-            "Work",
-            "Fitness",
-            "School",
-            "Finance",
             "Personal",
+            "Finance",
+            "Leisure",
+            "Health",
+            "Self Care",
+            "Work"
     };
 
     ProgressBar progressBar;

@@ -7,9 +7,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
@@ -19,14 +21,17 @@ public class SmartNotificationManager {
     private static final String CHANNEL_ID = "smart_reminder_channel";
     private static final String CHANNEL_NAME = "Smart Reminders";
     private static final String CHANNEL_DESCRIPTION = "AI-powered task reminders";
+    private static final String TAG = "SmartNotificationMgr";
 
     private Context context;
     private TaskAnalyzer taskAnalyzer;
 
     public SmartNotificationManager(Context context) {
         this.context = context;
-        this.taskAnalyzer = new TaskAnalyzer();
         createNotificationChannel();
+
+        // Initialiser TaskAnalyzer de manière sécurisée
+        this.taskAnalyzer = new TaskAnalyzer();
     }
 
     private void createNotificationChannel() {
@@ -44,6 +49,12 @@ public class SmartNotificationManager {
     }
 
     public void scheduleSmartReminders() {
+        // Vérifier si l'utilisateur est connecté avant d'analyser les tâches
+        if (!taskAnalyzer.isUserLoggedIn()) {
+            Log.d(TAG, "Impossible de programmer des rappels: utilisateur non connecté");
+            return;
+        }
+
         taskAnalyzer.analyzeTasks(new TaskAnalyzer.TaskAnalysisCallback() {
             @Override
             public void onAnalysisComplete(List<Task_Class> prioritizedTasks) {
@@ -55,6 +66,12 @@ public class SmartNotificationManager {
                         scheduleReminderForTask(task, i);
                     }
                 }
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                Log.e(TAG, "Erreur lors de l'analyse des tâches: " + errorMessage);
+                // Vous pourriez afficher un message à l'utilisateur ici si nécessaire
             }
         });
     }
@@ -110,5 +127,4 @@ public class SmartNotificationManager {
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(notificationId, builder.build());
-    }
-}
+    }}

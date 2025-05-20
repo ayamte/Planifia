@@ -52,12 +52,12 @@ public class Create_Task extends AppCompatActivity {
 
    private String[] categoryArray = {
            "Select Category",
-           "Work",
-           "Fitness",
-           "Finance",
-           "School",
            "Personal",
-           "Shared Tasks"
+           "Finance",
+           "Leisure",
+           "Health",
+           "Self Care",
+           "Work"
    };
 
    String userId;

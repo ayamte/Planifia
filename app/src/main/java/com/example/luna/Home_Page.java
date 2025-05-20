@@ -79,8 +79,15 @@ public class Home_Page extends AppCompatActivity {
         SmartNotificationManager smartNotificationManager = new SmartNotificationManager(this);
         smartNotificationManager.scheduleSmartReminders();
 
-        // Lire et afficher le nom d'utilisateur
-        readUserName();
+        // Lire et afficher le nom d'utilisateur seulement si l'utilisateur est connecté
+        if (firebaseUser != null) {
+            readUserName();
+        } else {
+            textViewUserWelcomeText.setText("Veuillez vous connecter");
+            // Rediriger vers l'écran de connexion si nécessaire
+            // Intent intent = new Intent(Home_Page.this, LoginActivity.class);
+            // startActivity(intent);
+        }
 
         // Configurer le profil utilisateur
         setupUserProfile();
@@ -184,6 +191,14 @@ public class Home_Page extends AppCompatActivity {
     }
 
     void readUserName() {
+        // Vérifier si l'utilisateur est connecté
+        if (firebaseUser == null) {
+            // Aucun utilisateur connecté, afficher un message approprié
+            textViewUserWelcomeText.setText("Veuillez vous connecter");
+            return;
+        }
+
+        // Continuer seulement si l'utilisateur est connecté
         String userId = firebaseUser.getUid();
         userReference.child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -373,6 +388,7 @@ public class Home_Page extends AppCompatActivity {
             Toast.makeText(this, "Erreur: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
+
     private void logoutUser() {
         AlertDialog.Builder builder = new AlertDialog.Builder(Home_Page.this);
         builder.setTitle("Déconnexion");

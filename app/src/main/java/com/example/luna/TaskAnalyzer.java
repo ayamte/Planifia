@@ -37,19 +37,30 @@ public class TaskAnalyzer {
     // Interface pour retourner les résultats de l'analyse
     public interface TaskAnalysisCallback {
         void onAnalysisComplete(List<Task_Class> prioritizedTasks);
+        void onError(String errorMessage);
     }
 
     public TaskAnalyzer() {
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-        userId = currentUser.getUid();
 
-        tasksReference = FirebaseDatabase.getInstance().getReference("Categorised Tasks").child(userId);
-        completedTasksReference = FirebaseDatabase.getInstance().getReference("Task Progress").child(userId).child("Completed");
+        // Vérifier si l'utilisateur est connecté
+        if (currentUser != null) {
+            userId = currentUser.getUid();
+            tasksReference = FirebaseDatabase.getInstance().getReference("Categorised Tasks").child(userId);
+            completedTasksReference = FirebaseDatabase.getInstance().getReference("Task Progress").child(userId).child("Completed");
+        }
+        // Pas besoin d'initialiser les références si l'utilisateur n'est pas connecté
     }
 
     // Méthode principale pour analyser et prioriser les tâches
     public void analyzeTasks(final TaskAnalysisCallback callback) {
+        // Vérifier si l'utilisateur est connecté
+        if (currentUser == null) {
+            callback.onError("Utilisateur non connecté");
+            return;
+        }
+
         // Récupérer toutes les tâches actives
         final List<Task_Class> allTasks = new ArrayList<>();
         final Map<String, Integer> categoryCompletionCount = new HashMap<>();
@@ -97,14 +108,14 @@ public class TaskAnalyzer {
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-                        // Gérer l'erreur
+                        callback.onError("Erreur lors de la récupération des tâches: " + databaseError.getMessage());
                     }
                 });
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Gérer l'erreur
+                callback.onError("Erreur lors de la récupération des tâches complétées: " + databaseError.getMessage());
             }
         });
     }
@@ -245,5 +256,10 @@ public class TaskAnalyzer {
             // Enregistrer le score dans l'objet tâche
             task.setPriorityScore(score);
         }
+    }
+
+    // Vérifier si l'utilisateur est connecté
+    public boolean isUserLoggedIn() {
+        return currentUser != null;
     }
 }
