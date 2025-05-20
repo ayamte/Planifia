@@ -125,8 +125,8 @@ public class Home_Page extends AppCompatActivity {
         viewMyEvents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Afficher la boîte de dialogue Google Calendar
-                showGoogleAlertDialog();
+                // Afficher le dialogue de sélection de catégorie pour les événements
+                showEventCategorySelectionDialog();
             }
         });
 
@@ -250,32 +250,115 @@ public class Home_Page extends AppCompatActivity {
         categoryDialog.show();
     }
 
-    // Méthode pour afficher la boîte de dialogue Google Calendar
-    private void showGoogleAlertDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(Home_Page.this);
-        builder.setTitle("Google Calendar");
-        builder.setMessage("Do you want to proceed to check your Google Calendar Events?");
 
-        builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse("https://calendar.google.com"));
-                startActivityForResult(intent, REQUEST_GOOGLE_CALENDAR);
-            }
-        });
+    private void showEventCategorySelectionDialog() {
+        try {
+            Log.d(TAG, "showEventCategorySelectionDialog: Début de la méthode");
 
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
+            // Créer une boîte de dialogue pour la sélection de catégorie
+            Dialog categoryDialog = new Dialog(Home_Page.this);
+            Log.d(TAG, "showEventCategorySelectionDialog: Dialog créé");
 
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+            categoryDialog.setContentView(R.layout.category_selection_dialog);
+            Log.d(TAG, "showEventCategorySelectionDialog: Content view défini");
+
+            // Trouver les vues de catégorie dans la boîte de dialogue
+            View viewPersonalCategory = categoryDialog.findViewById(R.id.viewPersonalCategory);
+            View viewFinanceCategory = categoryDialog.findViewById(R.id.viewFinanceCategory);
+            View viewLeisureCategory = categoryDialog.findViewById(R.id.viewLeisureCategory);
+            View viewHealthCategory = categoryDialog.findViewById(R.id.viewHealthCategory);
+            View viewSelfCategory = categoryDialog.findViewById(R.id.viewSelfCategory);
+            View viewWorkCategory = categoryDialog.findViewById(R.id.viewWorkCategory);
+
+            Log.d(TAG, "showEventCategorySelectionDialog: Vues des catégories trouvées");
+
+            // Configurer les écouteurs de clic pour chaque catégorie
+            viewPersonalCategory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Home_Page.this, view_events_activity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("category", "Personal");
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                    categoryDialog.dismiss();
+                }
+            });
+
+            viewFinanceCategory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Home_Page.this, view_events_activity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("category", "Finance");
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                    categoryDialog.dismiss();
+                }
+            });
+
+            viewLeisureCategory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Home_Page.this, view_events_activity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("category", "Leisure");
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                    categoryDialog.dismiss();
+                }
+            });
+
+            viewHealthCategory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Home_Page.this, view_events_activity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("category", "Health");
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                    categoryDialog.dismiss();
+                }
+            });
+
+            viewSelfCategory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Home_Page.this, view_events_activity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("category", "Self");
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                    categoryDialog.dismiss();
+                }
+            });
+
+            viewWorkCategory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Home_Page.this, view_events_activity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("category", "Work");
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                    categoryDialog.dismiss();
+                }
+            });
+
+            Log.d(TAG, "showEventCategorySelectionDialog: Écouteurs de clic configurés");
+
+            // Afficher la boîte de dialogue
+            categoryDialog.show();
+        } catch (Exception e) {
+            Log.e(TAG, "showEventCategorySelectionDialog: Erreur", e);
+        }
     }
-
     // Méthode pour afficher la boîte de dialogue de sélection de catégorie
     private void showCategorySelectionDialog() {
         try {
