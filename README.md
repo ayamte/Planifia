@@ -1,62 +1,46 @@
-# Task Management Application
+Planifia est une application Android de gestion de tâches et d'événements qui aide les utilisateurs à organiser leurs activités quotidiennes.
 
-The Task Management Application is a robust mobile application developed in Java, leveraging Firebase as the backend to facilitate seamless task management. The app is designed to help users organize their daily activities and synchronize them with the Google API Calendar.
+# Prérequis:
+Android Studio
+JDK 11
+Gradle version 7.3.3
+Compte Firebase
 
-## Features
 
-- **User Authentication:** Securely log in and register using Firebase RealTime Database.
-- **Intuitive Dashboard:** Manage and organize tasks efficiently with a user-friendly dashboard.
-- **Event Creation:** Easily create and schedule events within the application.
-- **Task Tracking:** Keep tabs on your tasks and monitor their progress effortlessly.
-- **Task Categorization:** Categorize tasks for better organization and clarity.
+# Installation
+1. Clonez le dépôt
+git clone https://github.com/ayamte/Planifia.git  
 
-## Getting Started
+2. Ouvrez le projet dans Android Studio
+File > Open > [chemin vers le dossier Planifia]
 
-To get started with the Task Management Application, follow these steps:
+3. Configurez Firebase
+ Créez un projet Firebase sur la console Firebase
+ Ajoutez une application Android avec le package com.example.planifia
+ Téléchargez le fichier google-services.json et placez-le dans le dossier app/
+ Assurez-vous d'activer les services Firebase suivants:
+    Authentication 
+    Realtime Database
+    Storage
 
-1. Clone the repository.
-2. Configure Firebase credentials.
-3. Build and run the application on your Android Studio IDE.
-4. Preferrably use JDK 11 with gradle version 7.3.3
+# Configuration
+1.  Vérifiez que les dépendances Firebase sont correctement configurées dans le fichier app/build.gradle 
+2. Assurez-vous que le SDK Android est configuré correctement 
+3. Vérifiez la configuration minimale requise 
 
-## Contributing
+# Exécution
+1. Connectez un appareil Android ou configurez un émulateur
+2. Cliquez sur "Run" (▶️) dans Android Studio
+3. Sélectionnez l'appareil cible et confirmez
 
-Contributions are welcome! If you'd like to contribute to the project, please follow our [contribution guidelines](CONTRIBUTING.md).
 
-## License
+# Fonctionnalités
+1. Authentification utilisateur: Connexion et inscription sécurisées via Firebase
+2. Tableau de bord intuitif: Gestion et organisation efficace des tâches
+3. Création d'événements: Création et planification d'événements
+4. Suivi des tâches: Surveillance de la progression des tâches
+5. Catégorisation des tâches: Organisation des tâches par catégories
 
-This project is licensed under the [MIT License](LICENSE).
-## Screenshots
-
-### Launcher Screen
-![Launcher Screen](https://github.com/Dalton-47/Task-Management-Application/blob/main/Splash-Screen.jpg)
-
-### Login Page
-The application features a secure login page, authenticated and validated using Firebase RealTime Database.
-![Login Page](https://github.com/Dalton-47/Task-Management-Application/blob/main/Login-Page.jpg)
-
-### User Registration Page
-Effortlessly register for an account with the user-friendly registration page.
-![User Registration Page](https://github.com/Dalton-47/Task-Management-Application/blob/main/Registration-Page.jpg)
-
-### Dashboard
-The user dashboard provides an intuitive interface for managing tasks efficiently.
-![Dashboard](https://github.com/Dalton-47/Task-Management-Application/blob/main/Home-Page.jpg)
-
-### Create Event
-Easily create events with the dedicated page.
-![Create Event Page](https://github.com/Dalton-47/Task-Management-Application/blob/main/create_event.jpg)
-
-### Sample Task Created
-Explore a sample task to understand the application's functionality.
-![Sample Task](https://github.com/Dalton-47/Task-Management-Application/blob/main/task_category_page_update.jpg)
-
-### Track Tasks
-Efficiently track and manage tasks with the dedicated task tracking feature.
-![Track Tasks](https://github.com/Dalton-47/Task-Management-Application/blob/main/Track_tasks.jpg)
-
-### Select Task Category
-Categorize tasks easily with the task category selection page.
-![Task Category](https://github.com/Dalton-47/Task-Management-Application/blob/main/Choose_Task_Category.jpg)
-
+# Licence
+Ce projet est sous licence MIT.
 
