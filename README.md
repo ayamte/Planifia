@@ -1,10 +1,10 @@
 Planifia est une application Android de gestion de tâches et d'événements qui aide les utilisateurs à organiser leurs activités quotidiennes.
 
 # Prérequis:
-Android Studio
-JDK 11
-Gradle version 7.3.3
-Compte Firebase
+1. Android Studio
+2. JDK 11
+3. Gradle version 7.3.3
+4. Compte Firebase
 
 
 # Installation
