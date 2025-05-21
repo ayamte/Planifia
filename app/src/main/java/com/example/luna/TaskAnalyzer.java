@@ -53,6 +53,11 @@ public class TaskAnalyzer {
         // Pas besoin d'initialiser les références si l'utilisateur n'est pas connecté
     }
 
+    // Méthode pour vérifier si l'utilisateur est connecté
+    public boolean isUserLoggedIn() {
+        return currentUser != null;
+    }
+
     // Méthode principale pour analyser et prioriser les tâches
     public void analyzeTasks(final TaskAnalysisCallback callback) {
         // Vérifier si l'utilisateur est connecté
@@ -128,39 +133,46 @@ public class TaskAnalyzer {
             if (task != null) {
                 // Compter les complétions par catégorie
                 String category = task.getCategory();
-                if (categoryCompletionCount.containsKey(category)) {
-                    categoryCompletionCount.put(category, categoryCompletionCount.get(category) + 1);
-                } else {
-                    categoryCompletionCount.put(category, 1);
+                if (category != null) {
+                    if (categoryCompletionCount.containsKey(category)) {
+                        categoryCompletionCount.put(category, categoryCompletionCount.get(category) + 1);
+                    } else {
+                        categoryCompletionCount.put(category, 1);
+                    }
                 }
 
                 // Analyser l'heure de la journée préférée
-                try {
-                    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-                    Date taskTime = sdf.parse(task.getStartTime());
-                    Calendar cal = Calendar.getInstance();
-                    cal.setTime(taskTime);
-                    int hour = cal.get(Calendar.HOUR_OF_DAY);
+                String startTime = task.getStartTime();
+                if (startTime != null && !startTime.isEmpty()) {
+                    try {
+                        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+                        Date taskTime = sdf.parse(startTime);
+                        if (taskTime != null) {
+                            Calendar cal = Calendar.getInstance();
+                            cal.setTime(taskTime);
+                            int hour = cal.get(Calendar.HOUR_OF_DAY);
 
-                    // Diviser la journée en 4 périodes (matin, après-midi, soir, nuit)
-                    String timeSlot;
-                    if (hour >= 5 && hour < 12) {
-                        timeSlot = "morning";
-                    } else if (hour >= 12 && hour < 17) {
-                        timeSlot = "afternoon";
-                    } else if (hour >= 17 && hour < 22) {
-                        timeSlot = "evening";
-                    } else {
-                        timeSlot = "night";
-                    }
+                            // Diviser la journée en 4 périodes (matin, après-midi, soir, nuit)
+                            String timeSlot;
+                            if (hour >= 5 && hour < 12) {
+                                timeSlot = "morning";
+                            } else if (hour >= 12 && hour < 17) {
+                                timeSlot = "afternoon";
+                            } else if (hour >= 17 && hour < 22) {
+                                timeSlot = "evening";
+                            } else {
+                                timeSlot = "night";
+                            }
 
-                    if (timeOfDayPreference.containsKey(timeSlot)) {
-                        timeOfDayPreference.put(timeSlot, timeOfDayPreference.get(timeSlot) + 1);
-                    } else {
-                        timeOfDayPreference.put(timeSlot, 1);
+                            if (timeOfDayPreference.containsKey(timeSlot)) {
+                                timeOfDayPreference.put(timeSlot, timeOfDayPreference.get(timeSlot) + 1);
+                            } else {
+                                timeOfDayPreference.put(timeSlot, 1);
+                            }
+                        }
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
-                } catch (ParseException e) {
-                    e.printStackTrace();
                 }
             }
         }
@@ -169,6 +181,10 @@ public class TaskAnalyzer {
     // Calculer les scores de priorité pour chaque tâche
     private void calculatePriorityScores(List<Task_Class> tasks, Map<String, Integer> categoryCompletionCount,
                                          Map<String, Integer> timeOfDayPreference) {
+        if (tasks == null || tasks.isEmpty()) {
+            return;
+        }
+
         // Trouver le total des tâches complétées
         int totalCompletions = 0;
         for (Integer count : categoryCompletionCount.values()) {
@@ -197,69 +213,79 @@ public class TaskAnalyzer {
 
         // Calculer le score pour chaque tâche
         for (Task_Class task : tasks) {
+            if (task == null) {
+                continue;
+            }
+
             double score = 0.0;
 
             // Facteur 1: Date d'échéance (plus proche = plus prioritaire)
-            try {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                Date dueDate = sdf.parse(task.getDueDate());
-                Date today = new Date();
+            String dueDate = task.getDueDate();
+            if (dueDate != null && !dueDate.isEmpty()) {
+                try {
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    Date dueDateObj = sdf.parse(dueDate);
+                    if (dueDateObj != null) {
+                        Date today = new Date();
 
-                // Calculer la différence en jours
-                long diffInMillies = dueDate.getTime() - today.getTime();
-                long diffInDays = diffInMillies / (24 * 60 * 60 * 1000);
+                        // Calculer la différence en jours
+                        long diffInMillies = dueDateObj.getTime() - today.getTime();
+                        long diffInDays = diffInMillies / (24 * 60 * 60 * 1000);
 
-                // Normaliser: 0 jours = 1.0, 7 jours ou plus = 0.0
-                double dueDateScore = Math.max(0.0, 1.0 - (diffInDays / 7.0));
-                score += WEIGHT_DUE_DATE * dueDateScore;
-            } catch (ParseException e) {
-                e.printStackTrace();
+                        // Normaliser: 0 jours = 1.0, 7 jours ou plus = 0.0
+                        double dueDateScore = Math.max(0.0, 1.0 - (diffInDays / 7.0));
+                        score += WEIGHT_DUE_DATE * dueDateScore;
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
 
             // Facteur 2: Préférence de catégorie
-            if (task.getCategory().equals(preferredCategory)) {
+            String category = task.getCategory();
+            if (category != null && !category.isEmpty() && category.equals(preferredCategory)) {
                 score += WEIGHT_CATEGORY_PREFERENCE;
             }
 
             // Facteur 3: Taux de complétion pour cette catégorie
-            if (categoryCompletionCount.containsKey(task.getCategory()) && totalCompletions > 0) {
-                double completionRate = (double) categoryCompletionCount.get(task.getCategory()) / totalCompletions;
+            if (category != null && !category.isEmpty() && categoryCompletionCount.containsKey(category) && totalCompletions > 0) {
+                double completionRate = (double) categoryCompletionCount.get(category) / totalCompletions;
                 score += WEIGHT_COMPLETION_RATE * completionRate;
             }
 
             // Facteur 4: Moment de la journée
-            try {
-                SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
-                Date taskTime = sdf.parse(task.getStartTime());
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(taskTime);
-                int hour = cal.get(Calendar.HOUR_OF_DAY);
+            String startTime = task.getStartTime();
+            if (startTime != null && !startTime.isEmpty()) {
+                try {
+                    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+                    Date taskTime = sdf.parse(startTime);
+                    if (taskTime != null) {
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTime(taskTime);
+                        int hour = cal.get(Calendar.HOUR_OF_DAY);
 
-                String taskTimeSlot;
-                if (hour >= 5 && hour < 12) {
-                    taskTimeSlot = "morning";
-                } else if (hour >= 12 && hour < 17) {
-                    taskTimeSlot = "afternoon";
-                } else if (hour >= 17 && hour < 22) {
-                    taskTimeSlot = "evening";
-                } else {
-                    taskTimeSlot = "night";
-                }
+                        String taskTimeSlot;
+                        if (hour >= 5 && hour < 12) {
+                            taskTimeSlot = "morning";
+                        } else if (hour >= 12 && hour < 17) {
+                            taskTimeSlot = "afternoon";
+                        } else if (hour >= 17 && hour < 22) {
+                            taskTimeSlot = "evening";
+                        } else {
+                            taskTimeSlot = "night";
+                        }
 
-                if (taskTimeSlot.equals(preferredTimeSlot)) {
-                    score += WEIGHT_TIME_OF_DAY;
+                        if (taskTimeSlot.equals(preferredTimeSlot)) {
+                            score += WEIGHT_TIME_OF_DAY;
+                        }
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-            } catch (ParseException e) {
-                e.printStackTrace();
             }
 
             // Enregistrer le score dans l'objet tâche
             task.setPriorityScore(score);
         }
-    }
-
-    // Vérifier si l'utilisateur est connecté
-    public boolean isUserLoggedIn() {
-        return currentUser != null;
     }
 }

@@ -330,7 +330,7 @@ public class Home_Page extends AppCompatActivity {
                 public void onClick(View view) {
                     Intent intent = new Intent(Home_Page.this, view_events_activity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putString("category", "Self");
+                    bundle.putString("category", "Self Care");
                     intent.putExtras(bundle);
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
@@ -439,7 +439,7 @@ public class Home_Page extends AppCompatActivity {
                 public void onClick(View view) {
                     Intent intent = new Intent(Home_Page.this, view_tasks_activity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putString("category", "Self");
+                    bundle.putString("category", "Self Care");
                     intent.putExtras(bundle);
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
