@@ -79,6 +79,18 @@ public class Home_Page extends AppCompatActivity {
         SmartNotificationManager smartNotificationManager = new SmartNotificationManager(this);
         smartNotificationManager.scheduleSmartReminders();
 
+        if (firebaseUser != null) {
+            Uri uri = firebaseUser.getPhotoUrl();
+            if (uri != null) {
+                // Charger l'image avec Picasso
+                Picasso.get()
+                        .load(uri)
+                        .transform(new RoundedTransformation())
+                        .into(imageViewUserIcon);
+            }
+        }
+
+
         // Lire et afficher le nom d'utilisateur seulement si l'utilisateur est connecté
         if (firebaseUser != null) {
             readUserName();

@@ -322,10 +322,11 @@ public class Create_Event extends AppCompatActivity {
                         progressBar.setVisibility(View.GONE);
                         Toast.makeText(Create_Event.this, "Event Saved Successfully", Toast.LENGTH_SHORT).show();
 
-                        Intent myIntent = new Intent(Create_Event.this, APIMainActivity.class);
-                        myIntent.putExtra("data_object", newEvent);
+                        // Modification: Rediriger vers Home_Page au lieu de APIMainActivity
+                        Intent myIntent = new Intent(Create_Event.this, Home_Page.class);
                         startActivity(myIntent);
                         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                        finish(); // Fermer l'activité actuelle
                     } else {
                         progressBar.setVisibility(View.GONE);
                         Toast.makeText(Create_Event.this, "Failed to save event", Toast.LENGTH_SHORT).show();

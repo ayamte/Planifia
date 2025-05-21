@@ -5,12 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -34,7 +32,6 @@ public class Track_Tasks_Activity extends AppCompatActivity {
     DatabaseReference taskReference, myTaskRef;
     // Correction: Renommer "overdue" au lieu de "OverDue" pour uniformiser les statuts
     int taskCounter=0, completed=0, deferred=0, overdue=0, cancelled=0, pendingTasks=0;
-    TextView textViewTasks;
     PieChart pieChart;
 
     @Override
@@ -48,7 +45,6 @@ public class Track_Tasks_Activity extends AppCompatActivity {
 
         taskReference = FirebaseDatabase.getInstance().getReference("Created Tasks");
         myTaskRef = FirebaseDatabase.getInstance().getReference("Task Progress");
-        textViewTasks = (TextView) this.findViewById(R.id.textViewTasksCreated);
 
         pieChart = findViewById(R.id.pieChart);
 
@@ -94,7 +90,13 @@ public class Track_Tasks_Activity extends AppCompatActivity {
         }
 
         PieDataSet dataSet = new PieDataSet(entries, "");
-        dataSet.setColors(Color.GREEN, Color.BLUE, Color.YELLOW, Color.RED, Color.parseColor("#800080"));
+        dataSet.setColors(
+                Color.parseColor("#1fa055"),  // Vert pour Completed
+                Color.parseColor("#8B0000"),  // Bleu pour Cancelled
+                Color.parseColor("#05316a"),  // Jaune pour Deferred
+                Color.parseColor("#007fff"),  // Rouge pour Overdue
+                Color.parseColor("#9370db")   // Violet pour Pending
+        );
 
         PieData pieData = new PieData(dataSet);
         pieData.setDrawValues(true);
@@ -105,23 +107,6 @@ public class Track_Tasks_Activity extends AppCompatActivity {
     }
 
     void checkUserTasks() {
-        taskReference.child(userId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                taskCounter = 0; // Reset counter before counting
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    taskCounter++;
-                }
-                String tasks = Integer.toString(taskCounter);
-                textViewTasks.setText("Total Tasks Created = " + taskCounter);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(Track_Tasks_Activity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
         // Initialiser le graphique
         setupChart(pieChart);
 
