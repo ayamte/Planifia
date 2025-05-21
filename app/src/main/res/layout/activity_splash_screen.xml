@@ -7,21 +7,19 @@
     tools:context=".SplashScreen">
 
 
-
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animation_view"
         android:layout_width="350dp"
         android:layout_height="500dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="48dp"
         app:layout_constraintBaseline_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.344"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/animation_loading" />
-
-
 
     <TextView
         android:id="@+id/textView61"

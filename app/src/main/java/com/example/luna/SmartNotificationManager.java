@@ -11,9 +11,12 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 public class SmartNotificationManager {
@@ -80,11 +83,32 @@ public class SmartNotificationManager {
         // Calculer un moment optimal pour rappeler cette tâche
         Calendar calendar = Calendar.getInstance();
 
-        // Ajouter une heure aléatoire dans les prochaines 24 heures
-        // Dans une vraie implémentation, cela serait basé sur les habitudes de l'utilisateur
-        Random random = new Random();
-        int hoursToAdd = random.nextInt(24) + 1;
-        calendar.add(Calendar.HOUR_OF_DAY, hoursToAdd);
+        // Vérifier si la tâche a une échéance proche (moins de 24h)
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        try {
+            Date dueDate = sdf.parse(task.getDueDate());
+            Date today = new Date();
+            long diffInMillies = dueDate.getTime() - today.getTime();
+            long diffInHours = diffInMillies / (60 * 60 * 1000);
+
+            if (diffInHours <= 24) {
+                // Échéance proche: notification immédiate
+                calendar.add(Calendar.MINUTE, 5);
+                Log.d(TAG, "Tâche avec échéance proche: " + task.getTitle() + " - notification dans 5 minutes");
+            } else {
+                // Échéance plus lointaine: délai aléatoire
+                Random random = new Random();
+                int hoursToAdd = random.nextInt(24) + 1;
+                calendar.add(Calendar.HOUR_OF_DAY, hoursToAdd);
+                Log.d(TAG, "Tâche standard: " + task.getTitle() + " - notification dans " + hoursToAdd + " heures");
+            }
+        } catch (ParseException e) {
+            // En cas d'erreur, utiliser le comportement par défaut
+            Log.e(TAG, "Erreur lors de l'analyse de la date: " + e.getMessage());
+            Random random = new Random();
+            int hoursToAdd = random.nextInt(24) + 1;
+            calendar.add(Calendar.HOUR_OF_DAY, hoursToAdd);
+        }
 
         // Créer l'intent pour la notification
         Intent intent = new Intent(context, NotificationReceiver.class);
@@ -127,4 +151,5 @@ public class SmartNotificationManager {
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(notificationId, builder.build());
-    }}
+    }
+}

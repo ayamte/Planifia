@@ -59,7 +59,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/baseline_analytics_24" />
+                android:src="@drawable/baseline_start_timer_24" />
 
             <TextView
                 android:id="@+id/textViewEventItemTime"

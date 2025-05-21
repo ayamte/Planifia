@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#663300">
+    android:background="#05316a">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="250dp"
@@ -61,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Create New Task"
-            android:textColor="#663300"
+            android:textColor="#05316a"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/viewTaskDialog"
@@ -74,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Create New Event"
-            android:textColor="#663300"
+            android:textColor="#05316a"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/viewEventDialog"

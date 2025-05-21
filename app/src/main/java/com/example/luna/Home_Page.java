@@ -250,7 +250,6 @@ public class Home_Page extends AppCompatActivity {
         categoryDialog.show();
     }
 
-
     private void showEventCategorySelectionDialog() {
         try {
             Log.d(TAG, "showEventCategorySelectionDialog: Début de la méthode");
@@ -359,6 +358,7 @@ public class Home_Page extends AppCompatActivity {
             Log.e(TAG, "showEventCategorySelectionDialog: Erreur", e);
         }
     }
+
     // Méthode pour afficher la boîte de dialogue de sélection de catégorie
     private void showCategorySelectionDialog() {
         try {
@@ -378,8 +378,24 @@ public class Home_Page extends AppCompatActivity {
             View viewHealthCategory = categoryDialog.findViewById(R.id.viewHealthCategory);
             View viewSelfCategory = categoryDialog.findViewById(R.id.viewSelfCategory);
             View viewWorkCategory = categoryDialog.findViewById(R.id.viewWorkCategory);
+            View viewCompletedTasks = categoryDialog.findViewById(R.id.viewCompletedTasks);
 
             Log.d(TAG, "showCategorySelectionDialog: Vues des catégories trouvées");
+
+            // Configurer l'écouteur de clic pour les tâches complétées
+            viewCompletedTasks.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Home_Page.this, view_tasks_activity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("category", "Completed");
+                    bundle.putBoolean("isCompletedTasks", true);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                    categoryDialog.dismiss();
+                }
+            });
 
             // Configurer les écouteurs de clic pour chaque catégorie
             viewPersonalCategory.setOnClickListener(new View.OnClickListener() {
@@ -439,6 +455,7 @@ public class Home_Page extends AppCompatActivity {
                 public void onClick(View view) {
                     Intent intent = new Intent(Home_Page.this, view_tasks_activity.class);
                     Bundle bundle = new Bundle();
+                    // Correction: Utiliser "Self Care" au lieu de "Self"
                     bundle.putString("category", "Self Care");
                     intent.putExtras(bundle);
                     startActivity(intent);

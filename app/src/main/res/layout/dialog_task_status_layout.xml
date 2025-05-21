@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"
                 android:text="In-progress"
-                android:textColor="#663300"
+                android:textColor="#05316a"
                 android:textSize="16sp" />
 
 
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"
                 android:text="Completed"
-                android:textColor="#663300"
+                android:textColor="#05316a"
                 android:textSize="16sp" />
 
             <RadioButton
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"
                 android:text="Deferred"
-                android:textColor="#663300"
+                android:textColor="#05316a"
                 android:textSize="16sp" />
 
             <RadioButton
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"
                 android:text="Cancelled"
-                android:textColor="#663300"
+                android:textColor="#05316a"
                 android:textSize="16sp" />
         </RadioGroup>
 
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Task Title"
-            android:textColor="#663300"
+            android:textColor="#05316a"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Select current Status of Your Task "
-            android:textColor="#663300"
+            android:textColor="#05316a"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -95,7 +95,7 @@
             android:background="@drawable/rounded_brown_square"
             android:padding="8dp"
             android:text="Save Task Update"
-            android:textColor="#FFFDD0"
+            android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

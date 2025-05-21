@@ -33,10 +33,10 @@
                         android:layout_height="48dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="-6dp"
-                        android:background="@drawable/rounded_brown_square"
+                        android:background="@drawable/white_dialog"
                         android:padding="8dp"
                         android:text="TextView"
-                        android:textColor="#FFFDD0"
+                        android:textColor="#05316a"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
@@ -46,11 +46,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="8dp"
-                        android:background="#663300"
+                        android:background="#FFFFFF"
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
                         android:text="Title"
-                        android:textColor="#E8F5E9"
+                        android:textColor="#05316a"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,11 +60,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="-6dp"
-                        android:background="@drawable/rounded_brown_square"
+                        android:background="@drawable/white_dialog"
                         android:minHeight="48dp"
                         android:padding="8dp"
                         android:text="TextView"
-                        android:textColor="#FFFDD0"
+                        android:textColor="#05316a"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
@@ -74,11 +74,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="4dp"
-                        android:background="#663300"
+                        android:background="#FFFFFF"
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
                         android:text="Description"
-                        android:textColor="#E8F5E9"
+                        android:textColor="#05316a"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textViewTaskTitle_SEARCH" />
 
@@ -88,10 +88,10 @@
                         android:layout_height="48dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="-6dp"
-                        android:background="@drawable/rounded_brown_square"
+                        android:background="@drawable/white_dialog"
                         android:padding="8dp"
                         android:text="TextView"
-                        android:textColor="#FFFDD0"
+                        android:textColor="#05316a"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
@@ -101,11 +101,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="4dp"
-                        android:background="#663300"
+                        android:background="#FFFFFF"
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
                         android:text="Task Date"
-                        android:textColor="#E8F5E9"
+                        android:textColor="#05316a"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textViewTaskDescription_SEARCH" />
 
@@ -115,10 +115,10 @@
                         android:layout_height="48dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="-6dp"
-                        android:background="@drawable/rounded_brown_square"
+                        android:background="@drawable/white_dialog"
                         android:padding="8dp"
                         android:text="TextView"
-                        android:textColor="#FFFDD0"
+                        android:textColor="#05316a"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView24" />
 
@@ -128,11 +128,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="4dp"
-                        android:background="#663300"
+                        android:background="#FFFFFF"
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
                         android:text="Start Time"
-                        android:textColor="#E8F5E9"
+                        android:textColor="#05316a"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textViewTaskDueDate_SEARCH" />
 
@@ -143,10 +143,10 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="-6dp"
                         android:layout_marginBottom="8dp"
-                        android:background="@drawable/rounded_brown_square"
+                        android:background="@drawable/white_dialog"
                         android:padding="8dp"
                         android:text="TextView"
-                        android:textColor="#FFFDD0"
+                        android:textColor="#05316a"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView28" />
@@ -157,11 +157,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="4dp"
-                        android:background="#663300"
+                        android:background="#FFFFFF"
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
                         android:text="Category"
-                        android:textColor="#E8F5E9"
+                        android:textColor="#05316a"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textViewTaskEndTime_SEARCH" />
 
@@ -171,10 +171,10 @@
                         android:layout_height="48dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="-6dp"
-                        android:background="@drawable/rounded_brown_square"
+                        android:background="@drawable/white_dialog"
                         android:padding="8dp"
                         android:text="TextView"
-                        android:textColor="#FFFDD0"
+                        android:textColor="#05316a"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
@@ -184,11 +184,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="4dp"
-                        android:background="#663300"
+                        android:background="#FFFFFF"
                         android:paddingLeft="5dp"
                         android:paddingEnd="5dp"
                         android:text="End Time"
-                        android:textColor="#E8F5E9"
+                        android:textColor="#05316a"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textViewTaskStartTime_SEARCH" />
 

@@ -2,6 +2,7 @@ package com.example.luna;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,6 +48,7 @@ public class Task_Adapter extends RecyclerView.Adapter<Task_Adapter.DataViewHold
     Button btnSaveTaskStatusDialog;
     String newStatus="";
     String userId;
+    boolean isCompletedTasksView = false;
 
     public Task_Adapter(view_tasks_activity view_tasks_activity, TextView textViewTaskTitleDialog, Dialog myTaskDialog, RadioGroup radioGroupOptions, Button btnSaveTaskStatusDialog, OnSaveButtonClickListener onSaveButtonClickListener, interface_adapter interface_adapter) {
         myContext = view_tasks_activity;
@@ -57,6 +60,9 @@ public class Task_Adapter extends RecyclerView.Adapter<Task_Adapter.DataViewHold
         //initializing the interface
         this.onSaveButtonClickListener = onSaveButtonClickListener;
         this.interface_adapter = interface_adapter;
+
+        // Check if we're in the completed tasks view
+        this.isCompletedTasksView = view_tasks_activity.isCompletedTasksView();
     }
 
     public void setData(ArrayList<Task_Class> tasksAppointmentsList) {
@@ -70,27 +76,28 @@ public class Task_Adapter extends RecyclerView.Adapter<Task_Adapter.DataViewHold
 
     public static class DataViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewTaskProgress, textViewTaskTitle, textViewTaskDescription, textViewTaskStartTime,textViewTaskEndTime, textViewTaskDueDate;
-        Button btnUpdateTask;
+        TextView textViewTaskProgress, textViewTaskTitle, textViewTaskDescription, textViewTaskStartTime, textViewTaskEndTime, textViewTaskDueDate;
+        Button btnUpdateTask, btnDeleteTask;
 
         public DataViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            textViewTaskProgress = (TextView)  itemView.findViewById(R.id.textViewTaskStatus_REC);
-            textViewTaskTitle =(TextView)  itemView.findViewById(R.id.textViewTaskTitle_REC);
-            textViewTaskDescription = (TextView)  itemView.findViewById(R.id.textViewTaskDescription_REC);
-            textViewTaskDueDate = (TextView)  itemView.findViewById(R.id.textViewTaskDueDate_REC);
-            textViewTaskStartTime = (TextView)  itemView.findViewById(R.id.textViewTaskStartTime_REC);
-            textViewTaskEndTime = (TextView)   itemView.findViewById(R.id.textViewTaskEndTime_REC );
+            textViewTaskProgress = (TextView) itemView.findViewById(R.id.textViewTaskStatus_REC);
+            textViewTaskTitle = (TextView) itemView.findViewById(R.id.textViewTaskTitle_REC);
+            textViewTaskDescription = (TextView) itemView.findViewById(R.id.textViewTaskDescription_REC);
+            textViewTaskDueDate = (TextView) itemView.findViewById(R.id.textViewTaskDueDate_REC);
+            textViewTaskStartTime = (TextView) itemView.findViewById(R.id.textViewTaskStartTime_REC);
+            textViewTaskEndTime = (TextView) itemView.findViewById(R.id.textViewTaskEndTime_REC);
 
-            btnUpdateTask = (Button)  itemView.findViewById(R.id.buttonUpdateStatus_REC);
+            btnUpdateTask = (Button) itemView.findViewById(R.id.buttonUpdateStatus_REC);
+            btnDeleteTask = (Button) itemView.findViewById(R.id.buttonDeleteTask_REC);
         }
     }
 
     @NonNull
     @Override
     public DataViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_tasks_layout,parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_tasks_layout, parent, false);
         return new Task_Adapter.DataViewHolder(view);
     }
 
@@ -105,6 +112,63 @@ public class Task_Adapter extends RecyclerView.Adapter<Task_Adapter.DataViewHold
         holder.textViewTaskDueDate.setText(taskObj.getDueDate());
         holder.textViewTaskStartTime.setText(taskObj.getStartTime());
         holder.textViewTaskEndTime.setText(taskObj.getEndTime());
+
+        // Show delete button only for completed tasks
+        if ("Completed".equals(taskObj.getStatus()) || isCompletedTasksView) {
+            holder.btnDeleteTask.setVisibility(View.VISIBLE);
+        } else {
+            holder.btnDeleteTask.setVisibility(View.GONE);
+        }
+
+        // Add click listener for delete button
+        holder.btnDeleteTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Show confirmation dialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(myContext);
+                builder.setTitle("Delete Task");
+                builder.setMessage("Are you sure you want to permanently delete this task?");
+
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Get reference to the task in the database
+                        DatabaseReference taskRef = FirebaseDatabase.getInstance()
+                                .getReference("Task Progress")
+                                .child(userId)
+                                .child("Completed")
+                                .child(taskObj.getTitle());
+
+                        // Delete the task
+                        taskRef.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(myContext, "Task deleted successfully", Toast.LENGTH_SHORT).show();
+
+                                    // Refresh the view
+                                    if (interface_adapter != null) {
+                                        interface_adapter.onSaveInterface();
+                                    }
+                                } else {
+                                    Toast.makeText(myContext, "Failed to delete task", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
+                });
+
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
 
         holder.btnUpdateTask.setOnClickListener(new View.OnClickListener() {
             @Override

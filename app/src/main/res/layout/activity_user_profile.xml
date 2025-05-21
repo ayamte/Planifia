@@ -118,7 +118,7 @@
         android:drawablePadding="5dp"
         android:padding="8dp"
         android:text="Back to Dashboard"
-        android:textColor="#FFFDD0"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/view5"
         app:layout_constraintEnd_toEndOf="@+id/view5"
         app:layout_constraintStart_toStartOf="@+id/view5"
