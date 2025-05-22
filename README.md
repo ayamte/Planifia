@@ -14,7 +14,7 @@ git clone https://github.com/ayamte/Planifia.git
 2. Ouvrez le projet dans Android Studio
 File > Open > [chemin vers le dossier Planifia]
 
-3. Configurez Firebase
+3. Configurez Firebase:
  Créez un projet Firebase sur la console Firebase
  Ajoutez une application Android avec le package com.example.planifia
  Téléchargez le fichier google-services.json et placez-le dans le dossier app/
